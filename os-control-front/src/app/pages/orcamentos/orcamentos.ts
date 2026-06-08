@@ -1,29 +1,34 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DiaCalendario } from '../../models/calendario.model';
 import {
   AbaOrcamento,
-  DiaCalendario,
   OrcamentoSalvo,
   PecaSelecionada,
   ServicoSelecionado,
 } from '../../models/orcamento.model';
 import { PecaSalva } from '../../models/peca.model';
 import { ServicoSalvo } from '../../models/servico.model';
-import { AuthService } from '../../services/auth.service';
 import { OrcamentosService } from '../../services/orcamentos.service';
 import { PecasService } from '../../services/pecas.service';
 import { ServicosService } from '../../services/servicos.service';
+import {
+  converterDataTexto,
+  ehMesmaData,
+  formatarData,
+  formatarMesAno,
+} from '../../utils/calendario';
+import { converterMoedaParaNumero, formatarMoeda } from '../../utils/formatacao';
 
 @Component({
   selector: 'app-orcamentos',
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './orcamentos.html',
   styleUrl: './orcamentos.css',
 })
 export class Orcamentos implements OnInit {
-  usuarioLogado: string = 'Usuario';
   modoEdicao: boolean = false;
   orcamentoId: string = '';
   orcamentoConfirmadoId: string = '';
@@ -31,7 +36,7 @@ export class Orcamentos implements OnInit {
   observacao: string = '';
   desconto: string = '';
 
-  abaAtiva: AbaOrcamento = 'servicos';
+  abaAtiva: AbaOrcamento = 'pecas';
   calendarioAberto: boolean = false;
   modalConfirmacaoPdfAberto: boolean = false;
   modalServicoAberto: boolean = false;
@@ -69,9 +74,7 @@ export class Orcamentos implements OnInit {
     private orcamentosService: OrcamentosService,
     private pecasService: PecasService,
     private servicosService: ServicosService,
-    private authService: AuthService
   ) {
-    this.usuarioLogado = this.authService.obterUsuario();
     this.sincronizarCalendario(this.dataSelecionada);
   }
 
@@ -130,7 +133,11 @@ export class Orcamentos implements OnInit {
     const termo = this.novoServico.nome.trim().toLowerCase();
 
     return this.servicosDisponiveis.filter((servico) => {
-      return !termo || servico.nome.toLowerCase().includes(termo) || servico.id.toLowerCase().includes(termo);
+      return (
+        !termo ||
+        servico.nome.toLowerCase().includes(termo) ||
+        servico.id.toLowerCase().includes(termo)
+      );
     });
   }
 
@@ -138,7 +145,9 @@ export class Orcamentos implements OnInit {
     const termo = this.novaPeca.nome.trim().toLowerCase();
 
     return this.pecasDisponiveis.filter((peca) => {
-      return !termo || peca.nome.toLowerCase().includes(termo) || peca.id.toLowerCase().includes(termo);
+      return (
+        !termo || peca.nome.toLowerCase().includes(termo) || peca.id.toLowerCase().includes(termo)
+      );
     });
   }
 
@@ -177,9 +186,9 @@ export class Orcamentos implements OnInit {
     this.novoServico = {
       id: servico.id,
       nome: servico.nome,
-      valor: String(servico.preco),
+      valor: servico.valor,
     };
-    this.dropdownServicosAberto = false;
+    this.fecharDropdownServicos();
   }
 
   limparSelecaoServico() {
@@ -191,26 +200,19 @@ export class Orcamentos implements OnInit {
     this.dropdownServicosAberto = true;
   }
 
-  confirmarServico() {
+  adicionarServico() {
     const id = Number.parseInt(this.novoServico.id.trim(), 10);
     const nome = this.novoServico.nome.trim();
     const valor = this.converterEmNumero(this.novoServico.valor);
 
-    if (!Number.isFinite(id) || !nome || valor === null) {
-      return;
+    if (Number.isFinite(id) && nome && valor !== null) {
+      this.adicionarServicoSelecionado(String(id), nome, valor);
+      this.prepararProximaSelecaoServico();
     }
+  }
 
-    this.servicosSelecionados = [
-      ...this.servicosSelecionados,
-      {
-        id: String(id).padStart(2, '0'),
-        nome,
-        valor,
-      },
-    ];
-
-    this.limparNovoServico();
-    this.dropdownServicosAberto = false;
+  confirmarServicos() {
+    this.fecharModalServico();
   }
 
   fecharModalPeca() {
@@ -232,13 +234,16 @@ export class Orcamentos implements OnInit {
   }
 
   selecionarPeca(peca: PecaSalva) {
+    const quantidade = this.obterQuantidadeNovaPeca();
+
     this.novaPeca = {
       ...this.novaPeca,
       id: peca.id,
       nome: peca.nome,
-      valorUnitario: String(peca.valorUnitario),
+      quantidade,
+      valorUnitario: peca.valor,
     };
-    this.dropdownPecasAberto = false;
+    this.fecharDropdownPecas();
   }
 
   limparSelecaoPeca() {
@@ -251,29 +256,38 @@ export class Orcamentos implements OnInit {
     this.dropdownPecasAberto = true;
   }
 
-  confirmarPeca() {
+  adicionarPeca() {
     const id = Number.parseInt(this.novaPeca.id.trim(), 10);
     const nome = this.novaPeca.nome.trim();
     const quantidade = Number(this.novaPeca.quantidade);
     const valorUnitario = this.converterEmNumero(this.novaPeca.valorUnitario);
 
-    if (!Number.isFinite(id) || !nome || !Number.isFinite(quantidade) || quantidade <= 0 || valorUnitario === null) {
-      return;
+    if (
+      Number.isFinite(id) &&
+      nome &&
+      Number.isFinite(quantidade) &&
+      quantidade > 0 &&
+      valorUnitario !== null
+    ) {
+      this.adicionarPecaSelecionada(String(id), nome, quantidade, valorUnitario);
+      this.prepararProximaSelecaoPeca();
     }
+  }
 
-    this.pecasSelecionadas = [
-      ...this.pecasSelecionadas,
-      {
-        id: String(id).padStart(2, '0'),
-        nome,
-        quantidade,
-        valorUnitario,
-        valorTotal: quantidade * valorUnitario,
-      },
-    ];
+  confirmarPecas() {
+    this.fecharModalPeca();
+  }
 
-    this.limparNovaPeca();
-    this.dropdownPecasAberto = false;
+  removerServicoSelecionado(indice: number) {
+    this.servicosSelecionados = this.servicosSelecionados.filter(
+      (_, itemIndice) => itemIndice !== indice,
+    );
+  }
+
+  removerPecaSelecionada(indice: number) {
+    this.pecasSelecionadas = this.pecasSelecionadas.filter(
+      (_, itemIndice) => itemIndice !== indice,
+    );
   }
 
   abrirCalendario() {
@@ -328,7 +342,7 @@ export class Orcamentos implements OnInit {
         this.finalizarConfirmacaoOrcamento();
       },
       error: (erro) => {
-        console.error('Nao foi possivel abrir o PDF do orcamento.', erro);
+        console.error('Não foi possível abrir o PDF do orçamento.', erro);
         janela.close();
         this.finalizarConfirmacaoOrcamento();
       },
@@ -340,15 +354,7 @@ export class Orcamentos implements OnInit {
   }
 
   formatarMoeda(valor: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(valor);
-  }
-
-  sair() {
-    this.authService.sair();
-    this.router.navigate(['/login']);
+    return formatarMoeda(valor);
   }
 
   private salvarOrcamento() {
@@ -374,10 +380,6 @@ export class Orcamentos implements OnInit {
       pecas: this.pecasSelecionadas,
       valorTotal: this.formatarMoeda(total),
       total,
-      cliente: '',
-      nomeCliente: '',
-      veiculo: '',
-      modelo: '',
     };
 
     this.orcamentosService.salvar(orcamentoSalvo).subscribe({
@@ -398,7 +400,7 @@ export class Orcamentos implements OnInit {
         this.servicosDisponiveis = servicos;
       },
       error: (erro) => {
-        console.error('NÃ£o foi possÃ­vel carregar os serviÃ§os.', erro);
+        console.error('Não foi possível carregar os serviços.', erro);
         this.servicosDisponiveis = [];
       },
     });
@@ -408,7 +410,7 @@ export class Orcamentos implements OnInit {
         this.pecasDisponiveis = pecas;
       },
       error: (erro) => {
-        console.error('NÃ£o foi possÃ­vel carregar as peÃ§as.', erro);
+        console.error('Não foi possível carregar as peças.', erro);
         this.pecasDisponiveis = [];
       },
     });
@@ -425,7 +427,7 @@ export class Orcamentos implements OnInit {
         this.servicosSelecionados = Array.isArray(orcamento.servicos) ? orcamento.servicos : [];
         this.pecasSelecionadas = Array.isArray(orcamento.pecas) ? orcamento.pecas : [];
 
-        const data = this.converterDataTexto(orcamento.dataAbertura);
+        const data = converterDataTexto(orcamento.dataAbertura);
 
         if (data) {
           this.sincronizarCalendario(data);
@@ -445,6 +447,40 @@ export class Orcamentos implements OnInit {
     };
   }
 
+  private adicionarServicoSelecionado(id: string, nome: string, valor: number) {
+    this.servicosSelecionados = [
+      ...this.servicosSelecionados,
+      {
+        id: id.padStart(2, '0'),
+        nome,
+        valor,
+      },
+    ];
+  }
+
+  private adicionarPecaSelecionada(
+    id: string,
+    nome: string,
+    quantidade: number,
+    valorUnitario: number,
+  ) {
+    this.pecasSelecionadas = [
+      ...this.pecasSelecionadas,
+      {
+        id: id.padStart(2, '0'),
+        nome,
+        quantidade,
+        valorUnitario,
+        valorTotal: quantidade * valorUnitario,
+      },
+    ];
+  }
+
+  private prepararProximaSelecaoServico() {
+    this.limparNovoServico();
+    this.dropdownServicosAberto = false;
+  }
+
   private limparNovaPeca() {
     this.novaPeca = {
       id: '',
@@ -452,6 +488,17 @@ export class Orcamentos implements OnInit {
       quantidade: null,
       valorUnitario: '',
     };
+  }
+
+  private prepararProximaSelecaoPeca() {
+    this.limparNovaPeca();
+    this.dropdownPecasAberto = false;
+  }
+
+  private obterQuantidadeNovaPeca() {
+    const quantidade = Number(this.novaPeca.quantidade);
+
+    return Number.isFinite(quantidade) && quantidade > 0 ? quantidade : 1;
   }
 
   private calcularTotalNovaPeca() {
@@ -466,31 +513,26 @@ export class Orcamentos implements OnInit {
   }
 
   private converterEmNumero(valor: string | number) {
-    if (typeof valor === 'number') {
-      return Number.isFinite(valor) ? valor : null;
-    }
-
-    const texto = valor.trim().replace(/[R$\s]/g, '');
-
-    if (!texto) {
-      return null;
-    }
-
-    const normalizado = texto.includes(',') ? texto.replace(/\./g, '').replace(',', '.') : texto;
-    const numero = Number(normalizado);
-
-    return Number.isFinite(numero) ? numero : null;
+    return converterMoedaParaNumero(valor);
   }
 
   private sincronizarCalendario(dataBase: Date) {
-    this.dataSelecionada = new Date(dataBase.getFullYear(), dataBase.getMonth(), dataBase.getDate());
-    this.mesExibido = new Date(this.dataSelecionada.getFullYear(), this.dataSelecionada.getMonth(), 1);
-    this.dataAbertura = this.formatarData(this.dataSelecionada);
+    this.dataSelecionada = new Date(
+      dataBase.getFullYear(),
+      dataBase.getMonth(),
+      dataBase.getDate(),
+    );
+    this.mesExibido = new Date(
+      this.dataSelecionada.getFullYear(),
+      this.dataSelecionada.getMonth(),
+      1,
+    );
+    this.dataAbertura = formatarData(this.dataSelecionada);
     this.atualizarCalendario();
   }
 
   private atualizarCalendario() {
-    this.tituloCalendario = this.formatarMesAno(this.mesExibido);
+    this.tituloCalendario = formatarMesAno(this.mesExibido);
 
     const ano = this.mesExibido.getFullYear();
     const mes = this.mesExibido.getMonth();
@@ -508,7 +550,7 @@ export class Orcamentos implements OnInit {
         data,
         domingo: data.getDay() === 0,
         numero,
-        selecionado: this.ehMesmaData(data, this.dataSelecionada),
+        selecionado: ehMesmaData(data, this.dataSelecionada),
       });
     }
 
@@ -517,46 +559,6 @@ export class Orcamentos implements OnInit {
     }
 
     this.diasCalendario = dias;
-  }
-
-  private formatarData(data: Date) {
-    return new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }).format(data);
-  }
-
-  private formatarMesAno(data: Date) {
-    const texto = new Intl.DateTimeFormat('pt-BR', {
-      month: 'long',
-      year: 'numeric',
-    }).format(data);
-
-    return texto.charAt(0).toUpperCase() + texto.slice(1);
-  }
-
-  private ehMesmaData(dataA: Date, dataB: Date) {
-    return (
-      dataA.getDate() === dataB.getDate() &&
-      dataA.getMonth() === dataB.getMonth() &&
-      dataA.getFullYear() === dataB.getFullYear()
-    );
-  }
-
-  private converterDataTexto(valor: string) {
-    const partes = valor.split('/');
-
-    if (partes.length !== 3) {
-      return null;
-    }
-
-    const dia = Number(partes[0]);
-    const mes = Number(partes[1]) - 1;
-    const ano = Number(partes[2]);
-    const data = new Date(ano, mes, dia);
-
-    return Number.isFinite(data.getTime()) ? data : null;
   }
 
   private finalizarConfirmacaoOrcamento() {

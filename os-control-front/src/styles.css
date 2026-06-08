@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+/* Base global da aplicacao. Mantem viewport, fundo e tipografia padrao. */
+
 html,
 body {
   width: 100%;
@@ -22,6 +24,8 @@ app-root {
   width: 100%;
   height: 100%;
 }
+
+/* Shell autenticado compartilhado entre as paginas internas. */
 
 .barra-superior {
   position: fixed;
@@ -162,6 +166,25 @@ app-root {
   color: rgba(40, 33, 33, 0.82);
 }
 
+/* Estrutura visual compartilhada pelas paginas internas. */
+
+.pagina-interna {
+  min-height: 100dvh;
+  background: #f2efef;
+}
+
+.conteudo-pagina-padrao,
+.conteudo-lista-padrao {
+  position: fixed;
+  top: 93px;
+  left: 228px;
+  right: 0;
+  bottom: 0;
+  padding: 26px 0 44px;
+  background: #f2efef;
+  overflow: auto;
+}
+
 .cabecalho-pagina {
   position: relative;
   min-height: 86px;
@@ -270,9 +293,11 @@ app-root {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
+  align-self: end;
+  justify-self: start;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 3px;
   border: 0;
   border-radius: 50%;
   background: #f8f8f8;
@@ -280,12 +305,887 @@ app-root {
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.22);
 }
 
+.botao-filtro:hover {
+  background: #ffffff;
+}
+
+.botao-filtro:focus-visible {
+  outline: 2px solid #0da206;
+  outline-offset: 2px;
+}
+
 .icone-filtro {
+  display: block;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* Base compartilhada dos formularios de orcamento e ordem de servico. */
+
+.pagina-orcamentos .conteudo-pagina-padrao,
+.pagina-ordens-servico .conteudo-pagina-padrao {
+  padding: 18px 34px 42px;
+}
+
+.pagina-orcamentos .cabecalho-pagina,
+.pagina-ordens-servico .cabecalho-pagina {
+  min-height: 92px;
+  margin-bottom: 28px;
+}
+
+.pagina-orcamentos .botao-voltar,
+.pagina-ordens-servico .botao-voltar {
+  top: 14px;
+  left: 0;
+  width: 42px;
+  height: 42px;
+}
+
+.pagina-orcamentos .titulo-pagina,
+.pagina-ordens-servico .titulo-pagina {
+  font-size: clamp(46px, 4.8vw, 56px);
+}
+
+.pagina-orcamentos .formulario-orcamento,
+.pagina-ordens-servico .formulario-os {
+  max-width: 1088px;
+  margin: 0 auto;
+}
+
+.pagina-orcamentos .campo-formulario,
+.pagina-ordens-servico .campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pagina-orcamentos .rotulo-campo,
+.pagina-ordens-servico .rotulo-campo {
+  font-size: 18px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .entrada-campo,
+.pagina-ordens-servico .entrada-campo {
+  width: 100%;
+  height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 18px;
+  outline: none;
+  background: #f8f8f8;
+  font-size: 20px;
+  color: #544b4b;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.pagina-orcamentos .entrada-campo-bloqueada,
+.pagina-ordens-servico .entrada-campo-bloqueada {
+  background: #d3d3d3;
+  color: #4d4747;
+}
+
+.pagina-orcamentos .entrada-observacao,
+.pagina-ordens-servico .entrada-observacao {
+  width: 100%;
+  min-height: 98px;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: 18px;
+  outline: none;
+  resize: none;
+  background: #fbfbfb;
+  font-size: 18px;
+  color: #544b4b;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+/* Padroes compartilhados dos formularios exibidos como modal. */
+
+.pagina-formulario-modal {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: #d3d3d3;
+}
+
+.cartao-formulario-modal {
+  position: relative;
+  padding: 40px 32px 44px;
+  border-radius: 18px;
+  background: #f4f4f4;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.24);
+}
+
+.botao-fechar-formulario {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  text-decoration: none;
+  font-size: 0;
+  line-height: 1;
+}
+
+.icone-fechar-formulario {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.formulario-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-formulario-modal {
+  margin: 12px 0 42px;
+  text-align: center;
+  font-size: clamp(42px, 4vw, 56px);
+  font-weight: 400;
+  color: #5a5252;
+}
+
+.grade-formulario-modal {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(188px, 0.56fr);
+  gap: 16px;
+  align-items: end;
+}
+
+.campo-formulario-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rotulo-formulario-modal {
+  padding-left: 24px;
+  font-size: 16px;
+  color: #7f7b7b;
+}
+
+.entrada-formulario-modal {
+  width: 100%;
+  height: 36px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  outline: none;
+  background: #efebeb;
+  font-size: 18px;
+  color: #5b5555;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 5px rgba(0, 0, 0, 0.22);
+}
+
+.botao-formulario-modal {
+  min-width: 172px;
+  height: 42px;
+  margin-top: 44px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #079700;
+  font-size: 26px;
+  font-weight: 400;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.22);
+}
+
+.botao-formulario-modal:hover {
+  background: #058300;
+}
+
+.botao-formulario-modal:active {
+  transform: translateY(1px);
+}
+
+/* Abas, busca e lista de itens compartilhadas por orcamento e OS. */
+
+.pagina-orcamentos .abas-itens,
+.pagina-ordens-servico .abas-itens {
+  display: flex;
+  gap: 10px;
+}
+
+.pagina-orcamentos .aba-item,
+.pagina-ordens-servico .aba-item {
+  min-width: 132px;
+  height: 42px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 14px;
+  background: #f7f7f7;
+  font-size: 24px;
+  color: #5d5454;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.pagina-orcamentos .aba-ativa,
+.pagina-ordens-servico .aba-ativa {
+  background: #8f8a8a;
+  color: #2e2a2a;
+}
+
+.pagina-orcamentos .barra-pesquisa,
+.pagina-ordens-servico .barra-pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: min(100%, 286px);
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #d8d3d3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pagina-orcamentos .texto-pesquisa,
+.pagina-ordens-servico .texto-pesquisa {
+  font-size: 18px;
+  color: #5d5454;
+  white-space: nowrap;
+}
+
+.pagina-orcamentos .cabecalho-lista,
+.pagina-orcamentos .linha-item,
+.pagina-ordens-servico .cabecalho-lista,
+.pagina-ordens-servico .linha-item {
+  align-items: center;
+}
+
+.pagina-orcamentos .cabecalho-lista,
+.pagina-ordens-servico .cabecalho-lista {
+  margin-top: 18px;
+  padding: 0 28px 10px;
+  border-bottom: 1px solid rgba(93, 84, 84, 0.52);
+  font-size: 18px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .corpo-lista,
+.pagina-ordens-servico .corpo-lista {
+  min-height: 220px;
+  padding-top: 6px;
+}
+
+.pagina-orcamentos .linha-item,
+.pagina-ordens-servico .linha-item {
+  min-height: 46px;
+  padding: 0 28px;
+  border-radius: 12px;
+  font-size: 18px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .linha-item:hover,
+.pagina-ordens-servico .linha-item:hover {
+  background: rgba(216, 211, 211, 0.28);
+}
+
+.pagina-orcamentos .grade-servicos,
+.pagina-ordens-servico .grade-servicos {
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1fr) 224px;
+  gap: 18px;
+}
+
+.pagina-orcamentos .grade-pecas,
+.pagina-ordens-servico .grade-pecas {
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1.2fr) 90px 160px 170px;
+  gap: 18px;
+}
+
+.pagina-orcamentos .coluna-quantidade,
+.pagina-ordens-servico .coluna-quantidade {
+  text-align: center;
+}
+
+.pagina-orcamentos .coluna-unitario,
+.pagina-orcamentos .coluna-valor,
+.pagina-ordens-servico .coluna-unitario,
+.pagina-ordens-servico .coluna-valor {
+  text-align: right;
+}
+
+/* Padroes compartilhados dos modais internos das telas autenticadas. */
+
+.pagina-orcamentos .sobreposicao-modal,
+.pagina-ordens-servico .sobreposicao-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(184, 184, 184, 0.48);
+  backdrop-filter: blur(8px);
+}
+
+.pagina-orcamentos .modal-calendario,
+.pagina-orcamentos .modal-confirmacao-pdf,
+.pagina-orcamentos .modal-selecao-servico,
+.pagina-orcamentos .modal-selecao-peca,
+.pagina-ordens-servico .modal-calendario,
+.pagina-ordens-servico .modal-selecao-servico,
+.pagina-ordens-servico .modal-selecao-peca {
+  position: relative;
+  border-radius: 18px;
+  background: #f4f4f4;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pagina-orcamentos .botao-fechar-modal,
+.pagina-ordens-servico .botao-fechar-modal {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.icone-fechar-modal {
   display: block;
   width: 24px;
   height: 24px;
   object-fit: contain;
 }
+
+/* Linhas e acoes comuns dos modais de selecao. */
+
+.pagina-orcamentos .linha-modal,
+.pagina-ordens-servico .linha-modal {
+  width: 100%;
+  padding: 12px 38px;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  color: #5d5454;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pagina-orcamentos .linha-modal:hover,
+.pagina-ordens-servico .linha-modal:hover {
+  background: rgba(216, 211, 211, 0.28);
+}
+
+.pagina-orcamentos .linha-modal-selecionada,
+.pagina-ordens-servico .linha-modal-selecionada {
+  cursor: default;
+}
+
+.pagina-orcamentos .linha-modal-selecionada:hover,
+.pagina-ordens-servico .linha-modal-selecionada:hover {
+  background: transparent;
+}
+
+.pagina-orcamentos .botao-remover-item-modal,
+.pagina-ordens-servico .botao-remover-item-modal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  justify-self: center;
+}
+
+.pagina-orcamentos .icone-remover-item-modal,
+.pagina-ordens-servico .icone-remover-item-modal {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* Busca, dropdown e campos comuns dos modais de selecao. */
+
+.pagina-orcamentos .campo-modal-nome,
+.pagina-ordens-servico .campo-modal-nome {
+  position: relative;
+}
+
+.pagina-orcamentos .botao-fechar-modal-peca,
+.pagina-ordens-servico .botao-fechar-modal-peca {
+  top: 12px;
+  right: 16px;
+}
+
+.pagina-orcamentos .campo-pesquisa-modal,
+.pagina-ordens-servico .campo-pesquisa-modal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 18px;
+  background: #f8f8f8;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.pagina-orcamentos .campo-pesquisa-container,
+.pagina-ordens-servico .campo-pesquisa-container {
+  position: relative;
+}
+
+.pagina-orcamentos .campo-pesquisa-modal-selecionada,
+.pagina-ordens-servico .campo-pesquisa-modal-selecionada {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pagina-orcamentos .texto-item-selecionado,
+.pagina-ordens-servico .texto-item-selecionado {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pagina-orcamentos .botao-limpar-selecao,
+.pagina-ordens-servico .botao-limpar-selecao {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #ded8d8;
+  font-size: 18px;
+  line-height: 1;
+  color: #544b4b;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pagina-orcamentos .botao-limpar-selecao:hover,
+.pagina-ordens-servico .botao-limpar-selecao:hover {
+  background: #d0c9c9;
+}
+
+.pagina-orcamentos .dropdown-pesquisa-modal,
+.pagina-ordens-servico .dropdown-pesquisa-modal {
+  position: absolute;
+  right: auto;
+  bottom: calc(100% + 10px);
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: min(540px, calc(100vw - 64px));
+  max-height: 220px;
+  border-radius: 18px;
+  background: #f8f8f8;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  overflow: auto;
+}
+
+.pagina-orcamentos .item-dropdown-modal,
+.pagina-ordens-servico .item-dropdown-modal {
+  display: grid;
+  grid-template-columns: 68px minmax(220px, 1fr) 128px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  font-size: 17px;
+  color: #544b4b;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pagina-orcamentos .item-dropdown-modal:hover,
+.pagina-ordens-servico .item-dropdown-modal:hover {
+  background: rgba(216, 211, 211, 0.36);
+}
+
+.pagina-orcamentos .item-dropdown-modal-id,
+.pagina-ordens-servico .item-dropdown-modal-id {
+  white-space: nowrap;
+}
+
+.pagina-orcamentos .item-dropdown-modal-nome,
+.pagina-ordens-servico .item-dropdown-modal-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pagina-orcamentos .item-dropdown-modal-valor,
+.pagina-ordens-servico .item-dropdown-modal-valor {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pagina-orcamentos .rodape-modal-peca .entrada-campo,
+.pagina-ordens-servico .rodape-modal-peca .entrada-campo {
+  height: 42px;
+}
+
+.pagina-orcamentos .campo-modal-id .entrada-campo,
+.pagina-ordens-servico .campo-modal-id .entrada-campo {
+  width: 58px;
+}
+
+.pagina-orcamentos .campo-modal-qtd .entrada-campo,
+.pagina-ordens-servico .campo-modal-qtd .entrada-campo {
+  width: 72px;
+  text-align: center;
+}
+
+.pagina-orcamentos .campo-modal-unitario .entrada-campo,
+.pagina-orcamentos .campo-modal-total .entrada-campo,
+.pagina-ordens-servico .campo-modal-unitario .entrada-campo,
+.pagina-ordens-servico .campo-modal-total .entrada-campo {
+  width: 140px;
+}
+
+.pagina-orcamentos .campo-modal-total .entrada-campo,
+.pagina-ordens-servico .campo-modal-total .entrada-campo {
+  background: #d3d3d3;
+}
+
+.pagina-orcamentos .entrada-pesquisa-modal,
+.pagina-ordens-servico .entrada-pesquisa-modal {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  color: #544b4b;
+}
+
+.pagina-orcamentos .entrada-pesquisa-modal::placeholder,
+.pagina-ordens-servico .entrada-pesquisa-modal::placeholder {
+  color: #7d7575;
+}
+
+/* Estrutura comum dos modais de selecao de servicos e pecas. */
+
+.pagina-orcamentos .modal-selecao-servico,
+.pagina-ordens-servico .modal-selecao-servico {
+  display: flex;
+  flex-direction: column;
+  width: min(1136px, calc(100vw - 96px));
+  min-height: 460px;
+  padding: 58px 0 0;
+  overflow: hidden;
+}
+
+.pagina-orcamentos .cabecalho-lista-modal-servico,
+.pagina-ordens-servico .cabecalho-lista-modal-servico {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) 230px 44px;
+  gap: 24px;
+  align-items: center;
+  padding: 0 42px 16px;
+  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
+  font-size: 20px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .corpo-lista-modal-servico,
+.pagina-ordens-servico .corpo-lista-modal-servico,
+.pagina-orcamentos .corpo-lista-modal-peca,
+.pagina-ordens-servico .corpo-lista-modal-peca {
+  flex: 1;
+  min-height: 0;
+  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
+  overflow: auto;
+}
+
+.pagina-orcamentos .rodape-modal-servico,
+.pagina-ordens-servico .rodape-modal-servico {
+  display: grid;
+  grid-template-columns: 78px minmax(260px, 1fr) 230px minmax(326px, auto);
+  gap: 18px;
+  align-items: end;
+  padding: 18px 42px 34px;
+}
+
+.pagina-orcamentos .campo-modal-servico,
+.pagina-ordens-servico .campo-modal-servico,
+.pagina-orcamentos .campo-modal-peca,
+.pagina-ordens-servico .campo-modal-peca {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 18px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .entrada-id-modal,
+.pagina-ordens-servico .entrada-id-modal {
+  background: #d3d3d3;
+}
+
+.pagina-orcamentos .botao-ok-modal,
+.pagina-ordens-servico .botao-ok-modal {
+  display: block;
+  min-width: 248px;
+  height: 62px;
+  margin: 0 auto;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 18px;
+  background: #079700;
+  font-size: 30px;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pagina-orcamentos .botao-ok-modal-servico,
+.pagina-ordens-servico .botao-ok-modal-servico {
+  width: 150px;
+  min-width: 150px;
+  height: 48px;
+  margin: 0;
+  padding: 0 18px;
+  align-self: end;
+  justify-self: end;
+  font-size: 20px;
+}
+
+.pagina-orcamentos .acoes-modal-itens,
+.pagina-ordens-servico .acoes-modal-itens {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 10px;
+  align-self: end;
+  justify-self: end;
+}
+
+.pagina-orcamentos .botao-adicionar-item-modal,
+.pagina-orcamentos .botao-confirmar-itens-modal,
+.pagina-ordens-servico .botao-adicionar-item-modal,
+.pagina-ordens-servico .botao-confirmar-itens-modal {
+  width: auto;
+  height: 44px;
+  min-width: 132px;
+  margin: 0;
+  padding: 0 16px;
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.pagina-orcamentos .botao-confirmar-itens-modal,
+.pagina-ordens-servico .botao-confirmar-itens-modal {
+  min-width: 184px;
+}
+
+.pagina-orcamentos .modal-selecao-peca,
+.pagina-ordens-servico .modal-selecao-peca {
+  display: flex;
+  flex-direction: column;
+  width: min(1240px, calc(100vw - 180px));
+  height: min(760px, calc(100vh - 120px));
+  max-height: calc(100vh - 120px);
+  padding: 48px 0 0;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.pagina-orcamentos .cabecalho-lista-modal-peca,
+.pagina-ordens-servico .cabecalho-lista-modal-peca {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 88px 176px 176px 44px;
+  gap: 24px;
+  align-items: center;
+  padding: 0 38px 16px;
+  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
+  font-size: 20px;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .grade-modal-servico,
+.pagina-ordens-servico .grade-modal-servico {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) 230px;
+  gap: 24px;
+  align-items: center;
+}
+
+.pagina-orcamentos .grade-modal-servico-selecionado,
+.pagina-ordens-servico .grade-modal-servico-selecionado {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) 230px 44px;
+  gap: 24px;
+  align-items: center;
+}
+
+.pagina-orcamentos .grade-modal-peca,
+.pagina-ordens-servico .grade-modal-peca {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 88px 176px 176px;
+  gap: 24px;
+  align-items: center;
+}
+
+.pagina-orcamentos .grade-modal-peca-selecionado,
+.pagina-ordens-servico .grade-modal-peca-selecionado {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 88px 176px 176px 44px;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Calendario usado nas telas de orcamento e ordem de servico. */
+
+.pagina-orcamentos .modal-calendario,
+.pagina-ordens-servico .modal-calendario {
+  width: min(466px, calc(100vw - 48px));
+  padding: 58px 38px 34px;
+}
+
+.pagina-orcamentos .botao-fechar-calendario,
+.pagina-ordens-servico .botao-fechar-calendario {
+  top: 16px;
+  right: 18px;
+  width: 28px;
+  height: 28px;
+  font-size: 0;
+}
+
+.pagina-orcamentos .icone-fechar-calendario,
+.pagina-ordens-servico .icone-fechar-calendario {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.pagina-orcamentos .cabecalho-calendario,
+.pagina-ordens-servico .cabecalho-calendario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pagina-orcamentos .botao-navegacao-calendario,
+.pagina-ordens-servico .botao-navegacao-calendario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #ece8e8;
+  color: #514949;
+  cursor: pointer;
+}
+
+.pagina-orcamentos .icone-navegacao-calendario,
+.pagina-ordens-servico .icone-navegacao-calendario {
+  width: 26px;
+  height: 26px;
+}
+
+.pagina-orcamentos .titulo-calendario,
+.pagina-ordens-servico .titulo-calendario {
+  font-size: 28px;
+  text-align: center;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .grade-semana,
+.pagina-orcamentos .grade-calendario,
+.pagina-ordens-servico .grade-semana,
+.pagina-ordens-servico .grade-calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.pagina-orcamentos .grade-semana,
+.pagina-ordens-servico .grade-semana {
+  margin-bottom: 10px;
+}
+
+.pagina-orcamentos .dia-semana,
+.pagina-orcamentos .dia-calendario,
+.pagina-ordens-servico .dia-semana,
+.pagina-ordens-servico .dia-calendario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  font-size: 22px;
+  font-weight: 400;
+  color: #5d5454;
+}
+
+.pagina-orcamentos .dia-semana.domingo,
+.pagina-orcamentos .dia-domingo,
+.pagina-ordens-servico .dia-semana.domingo,
+.pagina-ordens-servico .dia-domingo {
+  color: #c45855;
+}
+
+.pagina-orcamentos .dia-calendario,
+.pagina-ordens-servico .dia-calendario {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pagina-orcamentos .dia-selecionado,
+.pagina-ordens-servico .dia-selecionado {
+  width: 32px;
+  min-height: 32px;
+  justify-self: center;
+  align-self: center;
+  border-radius: 6px;
+  background: #af4b47;
+  color: #1f1a1a;
+}
+
+.pagina-orcamentos .dia-vazio,
+.pagina-ordens-servico .dia-vazio {
+  min-height: 54px;
+}
+
+/* Padroes compartilhados das listas e tabelas administrativas. */
 
 .botao-novo-item,
 .botao-novo-cliente {
@@ -336,7 +1236,9 @@ app-root {
   border-right: 1px solid rgba(93, 84, 84, 0.18);
   border-bottom: 1px solid rgba(93, 84, 84, 0.18);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
-  transition: box-shadow 120ms ease, background-color 120ms ease;
+  transition:
+    box-shadow 120ms ease,
+    background-color 120ms ease;
 }
 
 .corpo-tabela .linha-tabela:nth-child(odd) {
@@ -418,7 +1320,20 @@ app-root {
   object-fit: contain;
 }
 
+@media (max-width: 1280px) {
+  .pagina-orcamentos .conteudo-pagina-padrao,
+  .pagina-ordens-servico .conteudo-pagina-padrao {
+    padding-inline: 28px;
+  }
+
+  .pagina-orcamentos .linha-modal,
+  .pagina-ordens-servico .linha-modal {
+    padding-inline: 24px;
+  }
+}
+
 @media (max-width: 980px) {
+  /* Ajustes globais de shell e tipografia para tablets. */
   .barra-superior {
     padding-right: 20px;
   }
@@ -436,12 +1351,72 @@ app-root {
     width: 210px;
   }
 
+  .conteudo-pagina-padrao,
+  .conteudo-lista-padrao {
+    left: 210px;
+  }
+
+  .pagina-orcamentos .conteudo-pagina-padrao,
+  .pagina-ordens-servico .conteudo-pagina-padrao {
+    padding: 18px 24px 36px;
+  }
+
   .titulo-pagina {
     font-size: 46px;
+  }
+
+  .pagina-orcamentos .grade-servicos,
+  .pagina-ordens-servico .grade-servicos {
+    grid-template-columns: 72px minmax(0, 1fr) 170px;
+  }
+
+  .pagina-orcamentos .grade-pecas,
+  .pagina-ordens-servico .grade-pecas {
+    grid-template-columns: 72px minmax(0, 1.1fr) 72px 130px 136px;
+  }
+
+  .pagina-orcamentos .cabecalho-lista,
+  .pagina-orcamentos .linha-item,
+  .pagina-ordens-servico .cabecalho-lista,
+  .pagina-ordens-servico .linha-item {
+    padding-inline: 16px;
+  }
+
+  .pagina-orcamentos .modal-selecao-peca,
+  .pagina-ordens-servico .modal-selecao-peca {
+    width: calc(100vw - 96px);
+    height: min(700px, calc(100vh - 96px));
+    max-height: calc(100vh - 96px);
+  }
+
+  .pagina-orcamentos .cabecalho-lista-modal-peca,
+  .pagina-ordens-servico .cabecalho-lista-modal-peca {
+    grid-template-columns: 72px minmax(0, 1fr) 74px 132px 132px 40px;
+    gap: 14px;
+    padding-inline: 24px;
+  }
+
+  .pagina-orcamentos .grade-modal-peca,
+  .pagina-ordens-servico .grade-modal-peca {
+    grid-template-columns: 72px minmax(0, 1fr) 74px 132px 132px;
+    gap: 14px;
+  }
+
+  .pagina-orcamentos .grade-modal-peca-selecionado,
+  .pagina-ordens-servico .grade-modal-peca-selecionado {
+    grid-template-columns: 72px minmax(0, 1fr) 74px 132px 132px 40px;
+    gap: 14px;
   }
 }
 
 @media (max-width: 720px) {
+  /* Ajustes globais para celular. O detalhamento de cada tela continua local. */
+  .conteudo-pagina-padrao,
+  .conteudo-lista-padrao {
+    position: static;
+    padding-top: 128px;
+  }
+
   .cabecalho-pagina {
     padding-top: 48px;
   }
@@ -454,6 +1429,29 @@ app-root {
     margin-inline: 14px;
   }
 
+  .cartao-formulario-modal {
+    padding: 34px 24px 38px;
+  }
+
+  .grade-formulario-modal {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .rotulo-formulario-modal {
+    padding-left: 8px;
+  }
+
+  .titulo-formulario-modal {
+    margin-top: 18px;
+    margin-bottom: 34px;
+  }
+
+  .botao-formulario-modal {
+    width: 100%;
+    max-width: 240px;
+  }
+
   .botao-novo-item,
   .botao-novo-cliente {
     grid-column: auto;
@@ -463,5 +1461,144 @@ app-root {
   .tabela-lista,
   .tabela-clientes {
     overflow-x: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .pagina-orcamentos .abas-itens,
+  .pagina-ordens-servico .abas-itens {
+    flex-wrap: wrap;
+  }
+
+  .pagina-orcamentos .aba-item,
+  .pagina-ordens-servico .aba-item {
+    flex: 1 1 180px;
+  }
+
+  .pagina-orcamentos .barra-pesquisa,
+  .pagina-ordens-servico .barra-pesquisa {
+    width: 100%;
+  }
+
+  .pagina-orcamentos .grade-servicos,
+  .pagina-ordens-servico .grade-servicos {
+    grid-template-columns: 54px minmax(0, 1fr) 118px;
+  }
+
+  .pagina-orcamentos .grade-pecas,
+  .pagina-ordens-servico .grade-pecas {
+    grid-template-columns: 46px minmax(0, 1fr) 52px 90px 96px;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .pagina-orcamentos .cabecalho-lista,
+  .pagina-orcamentos .linha-item,
+  .pagina-ordens-servico .cabecalho-lista,
+  .pagina-ordens-servico .linha-item {
+    padding-inline: 8px;
+    font-size: 15px;
+  }
+
+  .pagina-orcamentos .linha-modal,
+  .pagina-ordens-servico .linha-modal {
+    padding-inline: 16px;
+    font-size: 15px;
+  }
+
+  .pagina-orcamentos .campo-modal-servico-nome,
+  .pagina-orcamentos .campo-modal-nome,
+  .pagina-ordens-servico .campo-modal-servico-nome,
+  .pagina-ordens-servico .campo-modal-nome {
+    grid-column: 1 / -1;
+  }
+
+  .pagina-orcamentos .item-dropdown-modal,
+  .pagina-ordens-servico .item-dropdown-modal {
+    grid-template-columns: 56px minmax(0, 1fr) 96px;
+    font-size: 15px;
+  }
+
+  .pagina-orcamentos .dropdown-pesquisa-modal,
+  .pagina-ordens-servico .dropdown-pesquisa-modal {
+    right: 0;
+    width: 100%;
+  }
+
+  .pagina-orcamentos .campo-modal-id,
+  .pagina-orcamentos .campo-modal-qtd,
+  .pagina-orcamentos .campo-modal-unitario,
+  .pagina-orcamentos .campo-modal-total,
+  .pagina-ordens-servico .campo-modal-id,
+  .pagina-ordens-servico .campo-modal-qtd,
+  .pagina-ordens-servico .campo-modal-unitario,
+  .pagina-ordens-servico .campo-modal-total {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .pagina-orcamentos .sobreposicao-modal,
+  .pagina-ordens-servico .sobreposicao-modal {
+    padding: 16px;
+  }
+
+  .pagina-orcamentos .modal-calendario,
+  .pagina-ordens-servico .modal-calendario {
+    padding: 54px 18px 24px;
+  }
+
+  .pagina-orcamentos .botao-fechar-calendario,
+  .pagina-ordens-servico .botao-fechar-calendario {
+    top: 14px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .pagina-orcamentos .icone-fechar-calendario,
+  .pagina-ordens-servico .icone-fechar-calendario {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pagina-orcamentos .dia-semana,
+  .pagina-orcamentos .dia-calendario,
+  .pagina-ordens-servico .dia-semana,
+  .pagina-ordens-servico .dia-calendario {
+    min-height: 42px;
+    font-size: 18px;
+  }
+
+  .pagina-orcamentos .titulo-calendario,
+  .pagina-ordens-servico .titulo-calendario {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pagina-formulario-modal {
+    padding-inline: 14px;
+  }
+
+  .cartao-formulario-modal {
+    width: calc(100vw - 28px);
+    min-height: auto;
+    padding-inline: 18px;
+  }
+
+  .botao-fechar-formulario {
+    right: 18px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .icone-fechar-formulario {
+    width: 16px;
+    height: 16px;
+  }
+
+  .entrada-formulario-modal {
+    font-size: 16px;
   }
 }

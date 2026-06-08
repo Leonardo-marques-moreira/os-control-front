@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { ServicoApi, ServicoLista, ServicoSalvo } from '../models/servico.model';
+import { formatarMoeda } from '../utils/formatacao';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServicosService {
-  private readonly apiUrl = 'http://localhost:8080/servico';
+  private readonly apiUrl = `${environment.apiBaseUrl}/servico`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +26,9 @@ export class ServicosService {
   }
 
   buscarPorId(id: string): Observable<ServicoSalvo> {
-    return this.http.get<ServicoApi>(`${this.apiUrl}/${id}`).pipe(map((servico) => this.mapearServicoSalvo(servico)));
+    return this.http
+      .get<ServicoApi>(`${this.apiUrl}/${id}`)
+      .pipe(map((servico) => this.mapearServicoSalvo(servico)));
   }
 
   salvar(servico: ServicoSalvo): Observable<ServicoSalvo> {
@@ -34,7 +38,9 @@ export class ServicosService {
     };
 
     if (!servico.id) {
-      return this.http.post<ServicoApi>(this.apiUrl, dados).pipe(map((novoServico) => this.mapearServicoSalvo(novoServico)));
+      return this.http
+        .post<ServicoApi>(this.apiUrl, dados)
+        .pipe(map((novoServico) => this.mapearServicoSalvo(novoServico)));
     }
 
     return this.http
@@ -50,7 +56,7 @@ export class ServicosService {
     return {
       id: String(servico.id).padStart(2, '0'),
       nome: servico.descricao,
-      valor: this.formatarMoeda(servico.valor),
+      valor: formatarMoeda(servico.valor),
       preco: servico.valor,
     };
   }
@@ -59,14 +65,7 @@ export class ServicosService {
     return {
       id: String(servico.id).padStart(2, '0'),
       nome: servico.descricao,
-      valor: this.formatarMoeda(servico.valor),
+      valor: formatarMoeda(servico.valor),
     };
-  }
-
-  private formatarMoeda(valor: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(valor);
   }
 }

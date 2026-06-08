@@ -1,21 +1,7 @@
-.pagina-ordens-visualizar {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
-.conteudo-ordens-visualizar {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  padding: 26px 0 44px;
-  background: #f2efef;
-  overflow: auto;
-}
+/* Ajustes especificos da lista de ordens de servico. A estrutura geral fica em styles.css. */
 
 .barra-filtros {
-  grid-template-columns: 340px 260px 176px 44px;
+  grid-template-columns: 340px 260px 176px 46px;
 }
 
 .entrada-cliente {
@@ -58,21 +44,12 @@
 }
 
 @media (max-width: 980px) {
-  .conteudo-ordens-visualizar {
-    left: 210px;
-  }
-
   .barra-filtros {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
-  .conteudo-ordens-visualizar {
-    position: static;
-    padding-top: 128px;
-  }
-
   .barra-filtros {
     grid-template-columns: 1fr;
   }

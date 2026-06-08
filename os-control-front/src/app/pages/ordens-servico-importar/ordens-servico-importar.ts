@@ -1,26 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { OrcamentoImportacao } from '../../models/orcamento.model';
-import { AuthService } from '../../services/auth.service';
 import { OrcamentosService } from '../../services/orcamentos.service';
 
 @Component({
   selector: 'app-ordens-servico-importar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './ordens-servico-importar.html',
   styleUrl: './ordens-servico-importar.css',
 })
 export class OrdensServicoImportar implements OnInit {
-  usuarioLogado: string = 'Usuario';
   filtroNome = '';
   filtroId = '';
+  filtroNomeAplicado = '';
+  filtroIdAplicado = '';
   orcamentos: OrcamentoImportacao[] = [];
 
-  constructor(private router: Router, private orcamentosService: OrcamentosService, private authService: AuthService) {
-    this.usuarioLogado = this.authService.obterUsuario();
+  constructor(
+    private orcamentosService: OrcamentosService,
+  ) {
   }
 
   ngOnInit() {
@@ -36,8 +37,8 @@ export class OrdensServicoImportar implements OnInit {
   }
 
   get orcamentosFiltrados(): OrcamentoImportacao[] {
-    const nome = this.filtroNome.trim().toLowerCase();
-    const id = this.filtroId.trim().toLowerCase();
+    const nome = this.filtroNomeAplicado.trim().toLowerCase();
+    const id = this.filtroIdAplicado.trim().toLowerCase();
 
     return this.orcamentos.filter((orcamento) => {
       const combinaNome = !nome || orcamento.nome.toLowerCase().includes(nome);
@@ -51,8 +52,8 @@ export class OrdensServicoImportar implements OnInit {
     return Array.from({ length: Math.max(0, 9 - this.orcamentosFiltrados.length) });
   }
 
-  sair() {
-    this.authService.sair();
-    this.router.navigate(['/login']);
+  aplicarFiltros() {
+    this.filtroNomeAplicado = this.filtroNome;
+    this.filtroIdAplicado = this.filtroId;
   }
 }

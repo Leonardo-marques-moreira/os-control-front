@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 import {
   OrcamentoApi,
   OrcamentoImportacao,
@@ -11,40 +12,47 @@ import {
   PecaSelecionada,
   ServicoSelecionado,
 } from '../models/orcamento.model';
+import { formatarMoeda } from '../utils/formatacao';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrcamentosService {
-  private readonly apiUrl = 'http://localhost:8080/orcamentos';
-  private readonly relatorioUrl = 'http://localhost:8080/relatorio-orcamento';
+  private readonly apiUrl = `${environment.apiBaseUrl}/orcamentos`;
+  private readonly relatorioUrl = `${environment.apiBaseUrl}/relatorio-orcamento`;
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<OrcamentoSalvo[]> {
-    return this.http.get<OrcamentoApi[]>(this.apiUrl).pipe(
-      map((orcamentos) => orcamentos.map((orcamento) => this.mapearOrcamentoSalvo(orcamento)))
-    );
+    return this.http
+      .get<OrcamentoApi[]>(this.apiUrl)
+      .pipe(
+        map((orcamentos) => orcamentos.map((orcamento) => this.mapearOrcamentoSalvo(orcamento))),
+      );
   }
 
   listarLista(): Observable<OrcamentoLista[]> {
-    return this.http.get<OrcamentoApi[]>(this.apiUrl).pipe(
-      map((orcamentos) => orcamentos.map((orcamento) => this.mapearLista(orcamento)))
-    );
+    return this.http
+      .get<OrcamentoApi[]>(this.apiUrl)
+      .pipe(map((orcamentos) => orcamentos.map((orcamento) => this.mapearLista(orcamento))));
   }
 
   listarImportacao(): Observable<OrcamentoImportacao[]> {
-    return this.http.get<OrcamentoApi[]>(this.apiUrl).pipe(
-      map((orcamentos) => orcamentos.map((orcamento) => this.mapearImportacao(orcamento)))
-    );
+    return this.http
+      .get<OrcamentoApi[]>(this.apiUrl)
+      .pipe(map((orcamentos) => orcamentos.map((orcamento) => this.mapearImportacao(orcamento))));
   }
 
   buscarPorId(id: string): Observable<OrcamentoSalvo> {
-    return this.http.get<OrcamentoApi>(`${this.apiUrl}/${id}`).pipe(map((orcamento) => this.mapearOrcamentoSalvo(orcamento)));
+    return this.http
+      .get<OrcamentoApi>(`${this.apiUrl}/${id}`)
+      .pipe(map((orcamento) => this.mapearOrcamentoSalvo(orcamento)));
   }
 
   buscarParaImportacao(id: string): Observable<OrcamentoImportacao> {
-    return this.http.get<OrcamentoApi>(`${this.apiUrl}/${id}`).pipe(map((orcamento) => this.mapearImportacao(orcamento)));
+    return this.http
+      .get<OrcamentoApi>(`${this.apiUrl}/${id}`)
+      .pipe(map((orcamento) => this.mapearImportacao(orcamento)));
   }
 
   salvar(orcamento: OrcamentoSalvo): Observable<OrcamentoSalvo> {
@@ -57,12 +65,14 @@ export class OrcamentosService {
     };
 
     if (!orcamento.id) {
-      return this.http.post<OrcamentoApi>(this.apiUrl, dados).pipe(map((novoOrcamento) => this.mapearOrcamentoSalvo(novoOrcamento)));
+      return this.http
+        .post<OrcamentoApi>(this.apiUrl, dados)
+        .pipe(map((novoOrcamento) => this.mapearOrcamentoSalvo(novoOrcamento)));
     }
 
-    return this.http.put<OrcamentoApi>(`${this.apiUrl}/${orcamento.id}`, dados).pipe(
-      map((orcamentoAtualizado) => this.mapearOrcamentoSalvo(orcamentoAtualizado))
-    );
+    return this.http
+      .put<OrcamentoApi>(`${this.apiUrl}/${orcamento.id}`, dados)
+      .pipe(map((orcamentoAtualizado) => this.mapearOrcamentoSalvo(orcamentoAtualizado)));
   }
 
   excluir(id: string): Observable<void> {
@@ -88,12 +98,8 @@ export class OrcamentosService {
       desconto: '',
       servicos: this.mapearListaServicos(orcamento.itensServicos),
       pecas: this.mapearListaPecas(orcamento.itensPecas),
-      valorTotal: this.formatarMoeda(total),
+      valorTotal: formatarMoeda(total),
       total,
-      cliente: '',
-      nomeCliente: '',
-      veiculo: '',
-      modelo: '',
     };
   }
 
@@ -101,7 +107,7 @@ export class OrcamentosService {
     return {
       id: String(orcamento.id).padStart(2, '0'),
       nome: orcamento.nomeOrcamento?.trim() || '',
-      valorTotal: this.formatarMoeda(orcamento.valorTotal ?? 0),
+      valorTotal: formatarMoeda(orcamento.valorTotal ?? 0),
     };
   }
 
@@ -109,8 +115,6 @@ export class OrcamentosService {
     return {
       id: String(orcamento.id).padStart(2, '0'),
       nome: orcamento.nomeOrcamento?.trim() || '',
-      cliente: 'Cliente',
-      veiculo: 'Veiculo',
       dataAbertura: this.formatarData(orcamento.dataCriacao),
       observacao: orcamento.observacao?.trim() || '',
       servicos: this.mapearListaServicos(orcamento.itensServicos),
@@ -204,12 +208,5 @@ export class OrcamentosService {
       month: '2-digit',
       year: 'numeric',
     }).format(data);
-  }
-
-  private formatarMoeda(valor: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(valor);
   }
 }

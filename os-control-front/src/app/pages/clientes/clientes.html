@@ -1,62 +1,5 @@
-﻿<section class="pagina-clientes">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a class="item-home" routerLink="/home" routerLinkActive="item-home-ativo" [routerLinkActiveOptions]="{ exact: true }">
-        Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Orçamentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>T&eacute;cnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Pe&ccedil;as</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-clientes">
+<section class="pagina-interna pagina-clientes">
+  <main class="conteudo-pagina-padrao conteudo-clientes">
     <div class="cabecalho-pagina">
       <a class="botao-voltar" routerLink="/clientes" aria-label="Voltar para clientes">
         <img class="icone-voltar" src="assets/icone-voltar.png" alt="" />
@@ -72,17 +15,41 @@
         <div class="grade-dados-cliente">
           <div class="campo-formulario campo-nome">
             <label class="rotulo-campo" for="nome-cliente">Nome</label>
-            <input class="entrada-campo" id="nome-cliente" type="text" [(ngModel)]="cliente.nome" name="nomeCliente" />
+            <input
+              class="entrada-campo"
+              id="nome-cliente"
+              type="text"
+              [(ngModel)]="cliente.nome"
+              name="nomeCliente"
+            />
           </div>
 
           <div class="campo-formulario campo-cpf">
             <label class="rotulo-campo" for="cpf-cliente">CPF</label>
-            <input class="entrada-campo" id="cpf-cliente" type="text" [(ngModel)]="cliente.cpf" name="cpfCliente" />
+            <input
+              class="entrada-campo"
+              id="cpf-cliente"
+              type="text"
+              maxlength="14"
+              inputmode="numeric"
+              [ngModel]="cliente.cpf"
+              (ngModelChange)="atualizarCpf($event)"
+              name="cpfCliente"
+            />
           </div>
 
           <div class="campo-formulario campo-telefone">
             <label class="rotulo-campo" for="telefone-cliente">Telefone</label>
-            <input class="entrada-campo entrada-campo-menor" id="telefone-cliente" type="text" [(ngModel)]="cliente.telefone" name="telefoneCliente" />
+            <input
+              class="entrada-campo entrada-campo-menor"
+              id="telefone-cliente"
+              type="text"
+              maxlength="15"
+              inputmode="numeric"
+              [ngModel]="cliente.telefone"
+              (ngModelChange)="atualizarTelefone($event)"
+              name="telefoneCliente"
+            />
           </div>
         </div>
       </section>
@@ -91,35 +58,73 @@
         <h2 class="titulo-secao">Endere&ccedil;o</h2>
 
         <div class="grade-endereco">
-          
           <div class="campo-formulario area-cep">
             <label class="rotulo-campo" for="cep-cliente">CEP</label>
-            <input class="entrada-campo" id="cep-cliente" maxlength="8" type="text" inputmode="numeric" [ngModel]="cliente.cep" (ngModelChange)="atualizarCep($event)" name="cepCliente"/>
+            <input
+              class="entrada-campo"
+              id="cep-cliente"
+              maxlength="8"
+              type="text"
+              inputmode="numeric"
+              [ngModel]="cliente.cep"
+              (ngModelChange)="atualizarCep($event)"
+              name="cepCliente"
+            />
           </div>
-          
+
           <div class="campo-formulario area-rua">
             <label class="rotulo-campo" for="rua-cliente">Rua</label>
-            <input class="entrada-campo" id="rua-cliente" type="text" [(ngModel)]="cliente.rua" name="ruaCliente" />
+            <input
+              class="entrada-campo"
+              id="rua-cliente"
+              type="text"
+              [(ngModel)]="cliente.rua"
+              name="ruaCliente"
+            />
           </div>
 
           <div class="campo-formulario area-bairro">
             <label class="rotulo-campo" for="bairro-cliente">Bairro</label>
-            <input class="entrada-campo" id="bairro-cliente" type="text" [(ngModel)]="cliente.bairro" name="bairroCliente" />
+            <input
+              class="entrada-campo"
+              id="bairro-cliente"
+              type="text"
+              [(ngModel)]="cliente.bairro"
+              name="bairroCliente"
+            />
           </div>
 
           <div class="campo-formulario area-cidade">
             <label class="rotulo-campo" for="cidade-cliente">Cidade</label>
-            <input class="entrada-campo" id="cidade-cliente" type="text" [(ngModel)]="cliente.cidade" name="cidadeCliente" />
+            <input
+              class="entrada-campo"
+              id="cidade-cliente"
+              type="text"
+              [(ngModel)]="cliente.cidade"
+              name="cidadeCliente"
+            />
           </div>
 
           <div class="campo-formulario area-estado">
             <label class="rotulo-campo" for="estado-cliente">Estado</label>
-            <input class="entrada-campo" id="estado-cliente" type="text" [(ngModel)]="cliente.estado" name="estadoCliente" />
+            <input
+              class="entrada-campo"
+              id="estado-cliente"
+              type="text"
+              [(ngModel)]="cliente.estado"
+              name="estadoCliente"
+            />
           </div>
 
           <div class="campo-formulario area-complemento">
             <label class="rotulo-campo" for="complemento-cliente">Complemento</label>
-            <input class="entrada-campo" id="complemento-cliente" type="text" [(ngModel)]="cliente.complemento" name="complementoCliente" />
+            <input
+              class="entrada-campo"
+              id="complemento-cliente"
+              type="text"
+              [(ngModel)]="cliente.complemento"
+              name="complementoCliente"
+            />
           </div>
 
           <div class="area-acao-veiculo">
@@ -133,7 +138,9 @@
       <section class="secao-formulario secao-veiculos">
         <div class="cabecalho-veiculos">
           <h2 class="titulo-secao">Ve&iacute;culos cadastrados</h2>
-          <span class="texto-veiculo-apoio" *ngIf="!veiculos.length">Nenhum ve&iacute;culo cadastrado.</span>
+          <span class="texto-veiculo-apoio" *ngIf="!veiculos.length"
+            >Nenhum ve&iacute;culo cadastrado.</span
+          >
         </div>
 
         <div class="lista-veiculos" *ngIf="veiculos.length">
@@ -145,7 +152,11 @@
               <span>Ano: {{ veiculo.ano || '--' }}</span>
             </div>
 
-            <button class="botao-excluir-veiculo" type="button" (click)="excluirVeiculo(veiculo.id)">
+            <button
+              class="botao-excluir-veiculo"
+              type="button"
+              (click)="excluirVeiculo(veiculo.id)"
+            >
               Excluir ve&iacute;culo
             </button>
           </article>
@@ -160,18 +171,51 @@
 
   <div class="sobreposicao-modal" *ngIf="cadastroVeiculoAberto" (click)="fecharCadastroVeiculo()">
     <div class="modal-veiculo" (click)="$event.stopPropagation()">
-      <button class="botao-fechar-modal" type="button" (click)="fecharCadastroVeiculo()" aria-label="Fechar cadastro de veiculo">
-        <img class="icone-fechar" src="assets/icone-fechar.png" alt="" />
+      <button
+        class="botao-fechar-modal"
+        type="button"
+        (click)="fecharCadastroVeiculo()"
+        aria-label="Fechar cadastro de veiculo"
+      >
+        <img class="icone-fechar-modal" src="assets/icone-fechar.png" alt="" />
       </button>
 
-      <form class="formulario-veiculo" (ngSubmit)="adicionarVeiculo()">
+      <form class="formulario-modal" (ngSubmit)="adicionarVeiculo()">
         <h2 class="titulo-modal">Cadastro de Veículo</h2>
 
         <div class="grade-veiculo">
-          <input class="entrada-modal" type="text" placeholder="Marca" [(ngModel)]="novoVeiculo.marca" name="veiculoMarca" />
-          <input class="entrada-modal" type="text" placeholder="Placa" [(ngModel)]="novoVeiculo.placa" name="veiculoPlaca" />
-          <input class="entrada-modal" type="text" placeholder="Modelo" [(ngModel)]="novoVeiculo.modelo" name="veiculoModelo" />
-          <input class="entrada-modal" type="text" placeholder="Ano" [(ngModel)]="novoVeiculo.ano" name="veiculoAno" />
+          <input
+            class="entrada-modal"
+            type="text"
+            placeholder="Marca"
+            [ngModel]="novoVeiculo.marca"
+            (ngModelChange)="atualizarVeiculo('marca', $event)"
+            name="veiculoMarca"
+          />
+          <input
+            class="entrada-modal"
+            type="text"
+            placeholder="Placa"
+            [ngModel]="novoVeiculo.placa"
+            (ngModelChange)="atualizarVeiculo('placa', $event)"
+            name="veiculoPlaca"
+          />
+          <input
+            class="entrada-modal"
+            type="text"
+            placeholder="Modelo"
+            [ngModel]="novoVeiculo.modelo"
+            (ngModelChange)="atualizarVeiculo('modelo', $event)"
+            name="veiculoModelo"
+          />
+          <input
+            class="entrada-modal"
+            type="text"
+            placeholder="Ano"
+            [ngModel]="novoVeiculo.ano"
+            (ngModelChange)="atualizarVeiculo('ano', $event)"
+            name="veiculoAno"
+          />
         </div>
 
         <button class="botao-modal" type="submit">Cadastrar</button>

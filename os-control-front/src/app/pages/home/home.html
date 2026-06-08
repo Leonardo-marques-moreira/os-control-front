@@ -1,69 +1,23 @@
-﻿<section class="pagina-inicial">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a
-        class="item-home"
-        routerLink="/home"
-        routerLinkActive="item-home-ativo"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Or&ccedil;amentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>T&eacute;cnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Pe&ccedil;as</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-principal">
+<section class="pagina-interna pagina-home">
+  <main class="conteudo-pagina-padrao conteudo-home">
     <img class="logo-central" src="assets/logo-os-control.png" alt="OS Control" />
+
+    <div *ngIf="carregandoIndicadores" class="estado-home">Carregando cards...</div>
+
+    <div *ngIf="!carregandoIndicadores" class="cards-home">
+      <div *ngIf="houveFalhaNosIndicadores" class="alerta-home">
+        Alguns dados nao puderam ser carregados da API.
+      </div>
+
+      <article
+        *ngFor="let indicador of indicadores"
+        class="card-indicador"
+        [attr.data-tone]="indicador.destaque"
+      >
+        <span class="titulo-card">{{ indicador.titulo }}</span>
+        <strong class="valor-card">{{ indicador.valor }}</strong>
+        <p class="descricao-card">{{ indicador.descricao }}</p>
+      </article>
+    </div>
   </main>
 </section>
-
-

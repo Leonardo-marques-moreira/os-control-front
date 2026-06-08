@@ -1,62 +1,5 @@
-﻿<section class="pagina-servicos-lista">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a class="item-home" routerLink="/home" routerLinkActive="item-home-ativo" [routerLinkActiveOptions]="{ exact: true }">
-       Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Orçamentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Serviços</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>Técnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Peças</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Serviços</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-servicos-lista">
+﻿<section class="pagina-interna pagina-servicos-lista">
+  <main class="conteudo-lista-padrao conteudo-servicos-lista">
     <div class="cabecalho-pagina">
       <a class="botao-voltar" routerLink="/home" aria-label="Voltar para Home">
         <img class="icone-voltar" src="assets/icone-voltar.png" alt="" />
@@ -75,14 +18,25 @@
             type="text"
             [(ngModel)]="filtroNome"
             [ngModelOptions]="{ standalone: true }"
+            (keyup.enter)="aplicarFiltros()"
           />
-          <button class="botao-pesquisa" type="button" aria-label="Pesquisar servicos">
+          <button
+            class="botao-pesquisa"
+            type="button"
+            aria-label="Pesquisar servicos"
+            (click)="aplicarFiltros()"
+          >
             <img class="icone-pesquisa" src="assets/icone-lupa.png" alt="" />
           </button>
         </div>
       </div>
 
-      <button class="botao-filtro" type="button" aria-label="Filtrar servicos">
+      <button
+        class="botao-filtro"
+        type="button"
+        aria-label="Filtrar servicos"
+        (click)="aplicarFiltros()"
+      >
         <img class="icone-filtro" src="assets/icone-filtro.png" alt="" />
       </button>
 
@@ -107,11 +61,20 @@
           <span>{{ servico.valor }}</span>
 
           <div class="acoes-item">
-            <a class="botao-acao botao-editar" [routerLink]="['/servicos/editar', servico.id]" aria-label="Editar servico">
+            <a
+              class="botao-acao botao-editar"
+              [routerLink]="['/servicos/editar', servico.id]"
+              aria-label="Editar servico"
+            >
               <img class="icone-acao" src="assets/icone-editar-lapis.png" alt="" />
             </a>
 
-            <button class="botao-acao botao-excluir" type="button" (click)="excluirServico(servico.id)" aria-label="Excluir servico">
+            <button
+              class="botao-acao botao-excluir"
+              type="button"
+              (click)="excluirServico(servico.id)"
+              aria-label="Excluir servico"
+            >
               <img class="icone-acao" src="assets/icone-lixeira-deletar.png" alt="" />
             </button>
           </div>

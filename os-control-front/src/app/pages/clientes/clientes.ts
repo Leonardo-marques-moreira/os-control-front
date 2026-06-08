@@ -1,25 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClienteFormulario, ClienteSalvo, NovoVeiculo, Veiculo } from '../../models/cliente.model';
-import { AuthService } from '../../services/auth.service';
-import { ClientesService } from '../../services/clientes.service';
 import { CepService } from '../../services/cep.service';
+import { ClientesService } from '../../services/clientes.service';
+import { MensagemService } from '../../services/mensagem.service';
+import { formatarCpf, formatarTelefone } from '../../utils/formatacao';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './clientes.html',
   styleUrl: './clientes.css',
 })
 export class Clientes implements OnInit {
-  modoEdicao: boolean = false;
-  clienteId: string = '';
+  modoEdicao = false;
+  clienteId = '';
   clienteEnderecoId?: number;
-  usuarioLogado: string = 'Usuario';
-  cadastroVeiculoAberto: boolean = false;
+  cadastroVeiculoAberto = false;
   cliente: ClienteFormulario = {
     nome: '',
     cpf: '',
@@ -43,10 +43,9 @@ export class Clientes implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private clientesService: ClientesService,
-    private authService: AuthService,
-    private cepService: CepService
+    private cepService: CepService,
+    private mensagemService: MensagemService,
   ) {
-    this.usuarioLogado = this.authService.obterUsuario();
   }
 
   ngOnInit() {
@@ -77,10 +76,10 @@ export class Clientes implements OnInit {
   }
 
   adicionarVeiculo() {
-    const marca = this.novoVeiculo.marca.trim();
-    const placa = this.novoVeiculo.placa.trim();
-    const modelo = this.novoVeiculo.modelo.trim();
-    const ano = this.novoVeiculo.ano.trim();
+    const marca = this.formatarTextoMaiusculo(this.novoVeiculo.marca);
+    const placa = this.formatarTextoMaiusculo(this.novoVeiculo.placa);
+    const modelo = this.formatarTextoMaiusculo(this.novoVeiculo.modelo);
+    const ano = this.formatarTextoMaiusculo(this.novoVeiculo.ano);
 
     if (!marca && !placa && !modelo && !ano) {
       return;
@@ -102,7 +101,7 @@ export class Clientes implements OnInit {
   }
 
   excluirVeiculo(id: string) {
-    this.veiculos = this.veiculos.filter((veiculo) => veiculo.id !== id);
+    this.veiculos = this.veiculos.filter(veiculo => veiculo.id !== id);
   }
 
   salvarCliente() {
@@ -112,24 +111,30 @@ export class Clientes implements OnInit {
       veiculos: this.veiculos,
       enderecoId: this.modoEdicao ? this.clienteEnderecoId : undefined,
     };
+    const novoCadastro = !this.modoEdicao;
 
     this.clientesService.salvar(clienteSalvo).subscribe({
-      next: () => this.router.navigate(['/clientes']),
-      error: (erro) => {
-        console.error('Não foi possível salvar o cliente.', erro);
-        window.alert('Não foi possível salvar o cliente. Verifique se a cidade e o estado existem no backend.');
+      next: () => {
+        if (novoCadastro) {
+          this.mensagemService.mostrarSucesso('Cliente cadastrado com sucesso.');
+        }
+
+        this.router.navigate(['/clientes']);
+      },
+      error: erro => {
+        console.error('Nao foi possivel salvar o cliente.', erro);
+        const mensagem =
+          erro?.error?.message ||
+          erro?.message ||
+          'Nao foi possivel salvar o cliente. Verifique se a cidade e o estado existem no backend.';
+        this.mensagemService.informar(mensagem, 'Nao foi possivel salvar o cliente');
       },
     });
   }
 
-  sair() {
-    this.authService.sair();
-    this.router.navigate(['/login']);
-  }
-
   private carregarCliente(id: string) {
     this.clientesService.buscarPorId(id).subscribe({
-      next: (cliente) => {
+      next: cliente => {
         this.modoEdicao = true;
         this.clienteId = cliente.id;
         this.clienteEnderecoId = cliente.enderecoId;
@@ -146,45 +151,56 @@ export class Clientes implements OnInit {
         };
         this.veiculos = Array.isArray(cliente.veiculos) ? cliente.veiculos : [];
       },
-      error: (erro) => {
-        console.error('Não foi possível carregar o cliente.', erro);
+      error: erro => {
+        console.error('Nao foi possivel carregar o cliente.', erro);
       },
     });
   }
 
-  private normalizarCep(valor: string){
+  private normalizarCep(valor: string) {
     return (valor ?? '').replace(/\D/g, '').slice(0, 8);
   }
 
   private buscarEnderecoPorCep(cep: string) {
-  this.cepService.buscarPorCep(cep).subscribe({
-    next: (endereco) => {
-      if (endereco.erro){
-        return;
-      } 
+    this.cepService.buscarPorCep(cep).subscribe({
+      next: endereco => {
+        if (endereco.erro) {
+          return;
+        }
 
-    this.cliente.rua = endereco.logradouro || '';
-    this.cliente.bairro = endereco.bairro || '';
-    this.cliente.cidade = endereco.localidade || '';
-    this.cliente.complemento = endereco.complemento || '';
-  },
-    error: (erro) => {
-      console.error('Não foi possível buscar o CEP.', erro);
-    },
-  });
-}
+        this.cliente.rua = endereco.logradouro || '';
+        this.cliente.bairro = endereco.bairro || '';
+        this.cliente.cidade = endereco.localidade || '';
+        this.cliente.estado = endereco.uf || '';
+        this.cliente.complemento = endereco.complemento || '';
+      },
+      error: erro => {
+        console.error('Nao foi possivel buscar o CEP.', erro);
+      },
+    });
+  }
 
-
-  atualizarCep(valor: string){
+  atualizarCep(valor: string) {
     const cep = this.normalizarCep(valor);
     this.cliente.cep = cep;
 
-    if (cep.length !== 8){
+    if (cep.length !== 8) {
       return;
     }
 
     this.buscarEnderecoPorCep(cep);
+  }
 
+  atualizarCpf(valor: string) {
+    this.cliente.cpf = formatarCpf(valor);
+  }
+
+  atualizarTelefone(valor: string) {
+    this.cliente.telefone = formatarTelefone(valor);
+  }
+
+  atualizarVeiculo(campo: keyof NovoVeiculo, valor: string) {
+    this.novoVeiculo[campo] = this.formatarTextoMaiusculo(valor);
   }
 
   private limparNovoVeiculo() {
@@ -194,5 +210,9 @@ export class Clientes implements OnInit {
       modelo: '',
       ano: '',
     };
+  }
+
+  private formatarTextoMaiusculo(valor: string) {
+    return (valor ?? '').toUpperCase().trimStart();
   }
 }

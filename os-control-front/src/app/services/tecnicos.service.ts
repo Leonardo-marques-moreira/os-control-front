@@ -1,26 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { TecnicoApi, TecnicoLista, TecnicoSalvo } from '../models/tecnico.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TecnicosService {
-  private readonly apiUrl = 'http://localhost:8080/usuario';
+  private readonly apiUrl = `${environment.apiBaseUrl}/usuario`;
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<TecnicoSalvo[]> {
-    return this.http.get<TecnicoApi[]>(this.apiUrl).pipe(
-      map((usuarios) => usuarios.filter((usuario) => this.ehTecnico(usuario)).map((usuario) => this.mapearTecnicoSalvo(usuario)))
-    );
+    return this.http
+      .get<TecnicoApi[]>(this.apiUrl)
+      .pipe(
+        map((usuarios) =>
+          usuarios
+            .filter((usuario) => this.ehTecnico(usuario))
+            .map((usuario) => this.mapearTecnicoSalvo(usuario)),
+        ),
+      );
   }
 
   listarLista(): Observable<TecnicoLista[]> {
-    return this.http.get<TecnicoApi[]>(this.apiUrl).pipe(
-      map((usuarios) => usuarios.filter((usuario) => this.ehTecnico(usuario)).map((usuario) => this.mapearTecnicoLista(usuario)))
-    );
+    return this.http
+      .get<TecnicoApi[]>(this.apiUrl)
+      .pipe(
+        map((usuarios) =>
+          usuarios
+            .filter((usuario) => this.ehTecnico(usuario))
+            .map((usuario) => this.mapearTecnicoLista(usuario)),
+        ),
+      );
   }
 
   listarNomes(): Observable<string[]> {
@@ -29,13 +42,15 @@ export class TecnicosService {
         usuarios
           .filter((usuario) => this.ehTecnico(usuario))
           .map((usuario) => usuario.nome.trim())
-          .filter((nome) => nome.length > 0)
-      )
+          .filter((nome) => nome.length > 0),
+      ),
     );
   }
 
   buscarPorId(id: string): Observable<TecnicoSalvo> {
-    return this.http.get<TecnicoApi>(`${this.apiUrl}/${id}`).pipe(map((usuario) => this.mapearTecnicoSalvo(usuario)));
+    return this.http
+      .get<TecnicoApi>(`${this.apiUrl}/${id}`)
+      .pipe(map((usuario) => this.mapearTecnicoSalvo(usuario)));
   }
 
   salvar(tecnico: TecnicoSalvo): Observable<TecnicoSalvo> {
@@ -53,10 +68,14 @@ export class TecnicosService {
     }
 
     if (!tecnico.id) {
-      return this.http.post<TecnicoApi>(this.apiUrl, dados).pipe(map((novoTecnico) => this.mapearTecnicoSalvo(novoTecnico)));
+      return this.http
+        .post<TecnicoApi>(this.apiUrl, dados)
+        .pipe(map((novoTecnico) => this.mapearTecnicoSalvo(novoTecnico)));
     }
 
-    return this.http.put<TecnicoApi>(`${this.apiUrl}/${tecnico.id}`, dados).pipe(map((tecnicoAtualizado) => this.mapearTecnicoSalvo(tecnicoAtualizado)));
+    return this.http
+      .put<TecnicoApi>(`${this.apiUrl}/${tecnico.id}`, dados)
+      .pipe(map((tecnicoAtualizado) => this.mapearTecnicoSalvo(tecnicoAtualizado)));
   }
 
   excluir(id: string): Observable<void> {

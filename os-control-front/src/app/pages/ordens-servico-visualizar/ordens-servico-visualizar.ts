@@ -1,32 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { OrdemServicoLista } from '../../models/ordem-servico.model';
-import { AuthService } from '../../services/auth.service';
 import { OrdensServicoService } from '../../services/ordens-servico.service';
 
 @Component({
   selector: 'app-ordens-servico-visualizar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './ordens-servico-visualizar.html',
   styleUrl: './ordens-servico-visualizar.css',
 })
 export class OrdensServicoVisualizar implements OnInit {
-  usuarioLogado: string = 'Usuario';
   filtroCliente = '';
   filtroTecnico = '';
   filtroStatus = '';
+  filtroClienteAplicado = '';
+  filtroTecnicoAplicado = '';
+  filtroStatusAplicado = '';
   ordens: OrdemServicoLista[] = [];
   readonly statusDisponiveis = ['Aberto', 'Em andamento', 'Fechada'];
 
   constructor(
-    private router: Router,
     private ordensServicoService: OrdensServicoService,
-    private authService: AuthService
   ) {
-    this.usuarioLogado = this.authService.obterUsuario();
   }
 
   ngOnInit() {
@@ -42,9 +40,9 @@ export class OrdensServicoVisualizar implements OnInit {
   }
 
   get ordensFiltradas(): OrdemServicoLista[] {
-    const cliente = this.filtroCliente.trim().toLowerCase();
-    const tecnico = this.filtroTecnico.trim().toLowerCase();
-    const status = this.filtroStatus.trim().toLowerCase();
+    const cliente = this.filtroClienteAplicado.trim().toLowerCase();
+    const tecnico = this.filtroTecnicoAplicado.trim().toLowerCase();
+    const status = this.filtroStatusAplicado.trim().toLowerCase();
 
     return this.ordens.filter((ordem) => {
       const combinaCliente = !cliente || ordem.cliente.toLowerCase().includes(cliente);
@@ -65,8 +63,9 @@ export class OrdensServicoVisualizar implements OnInit {
     return Array.from({ length: Math.max(0, 9 - this.ordensFiltradas.length) });
   }
 
-  sair() {
-    this.authService.sair();
-    this.router.navigate(['/login']);
+  aplicarFiltros() {
+    this.filtroClienteAplicado = this.filtroCliente;
+    this.filtroTecnicoAplicado = this.filtroTecnico;
+    this.filtroStatusAplicado = this.filtroStatus;
   }
 }

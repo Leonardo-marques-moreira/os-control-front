@@ -1,34 +1,71 @@
-﻿<section class="pagina-tecnicos">
-  <div class="modal-tecnicos">
+<section class="pagina-formulario-modal pagina-tecnicos">
+  <div class="cartao-formulario-modal modal-tecnicos">
     <a
-      class="botao-fechar"
+      class="botao-fechar-formulario botao-fechar"
       routerLink="/tecnicos"
       aria-label="Fechar cadastro de tecnico"
     >
-      <img class="icone-fechar" src="assets/icone-fechar.png" alt="" />
+      <img class="icone-fechar-formulario icone-fechar" src="assets/icone-fechar.png" alt="" />
     </a>
 
-    <form class="formulario-tecnico" (ngSubmit)="salvarTecnico()">
-      <h1 class="titulo-modal">{{ titulo }}</h1>
+    <form class="formulario-modal formulario-tecnico" (ngSubmit)="salvarTecnico()">
+      <h1 class="titulo-formulario-modal titulo-modal">{{ titulo }}</h1>
 
       <div class="grupo-campos">
-        <input class="entrada-campo" type="text" placeholder="Nome" [(ngModel)]="tecnico.nome" name="tecnicoNome" />
+        <input
+          class="entrada-formulario-modal entrada-campo"
+          type="text"
+          placeholder="Nome"
+          [(ngModel)]="tecnico.nome"
+          name="tecnicoNome"
+        />
 
         <div class="linha-campos">
-          <input class="entrada-campo" type="text" placeholder="CPF" [(ngModel)]="tecnico.cpf" name="tecnicoCpf" />
-          <input class="entrada-campo" type="text" placeholder="Telefone" [(ngModel)]="tecnico.telefone" name="tecnicoTelefone" />
+          <input
+            class="entrada-formulario-modal entrada-campo"
+            type="text"
+            placeholder="CPF"
+            maxlength="14"
+            inputmode="numeric"
+            [ngModel]="tecnico.cpf"
+            (ngModelChange)="atualizarCpf($event)"
+            name="tecnicoCpf"
+          />
+          <input
+            class="entrada-formulario-modal entrada-campo"
+            type="text"
+            placeholder="Telefone"
+            maxlength="15"
+            inputmode="numeric"
+            [ngModel]="tecnico.telefone"
+            (ngModelChange)="atualizarTelefone($event)"
+            name="tecnicoTelefone"
+          />
         </div>
       </div>
 
       <h2 class="titulo-secao">Dados de acesso</h2>
 
       <div class="grupo-campos grupo-login">
-        <input class="entrada-campo" type="text" placeholder="Usuario" [(ngModel)]="tecnico.usuario" name="tecnicoUsuario" />
-        <input class="entrada-campo" type="password" placeholder="Senha" [(ngModel)]="tecnico.senha" name="tecnicoSenha" />
+        <input
+          class="entrada-formulario-modal entrada-campo"
+          type="text"
+          placeholder="Usuario"
+          [(ngModel)]="tecnico.usuario"
+          name="tecnicoUsuario"
+        />
+        <input
+          class="entrada-formulario-modal entrada-campo"
+          type="password"
+          placeholder="Senha"
+          [(ngModel)]="tecnico.senha"
+          name="tecnicoSenha"
+        />
       </div>
 
-      <button class="botao-cadastrar" type="submit">{{ textoBotao }}</button>
+      <button class="botao-formulario-modal botao-cadastrar" type="submit">
+        {{ textoBotao }}
+      </button>
     </form>
   </div>
 </section>
-

@@ -1,62 +1,5 @@
-﻿<section class="pagina-ordens-visualizar">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a class="item-home" routerLink="/home" routerLinkActive="item-home-ativo" [routerLinkActiveOptions]="{ exact: true }">
-        Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Or&ccedil;amentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>T&eacute;cnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Pe&ccedil;as</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-ordens-visualizar">
+<section class="pagina-interna pagina-ordens-visualizar">
+  <main class="conteudo-lista-padrao conteudo-ordens-visualizar">
     <div class="cabecalho-pagina">
       <a class="botao-voltar" routerLink="/ordens-servico" aria-label="Voltar para menu de OS">
         <img class="icone-voltar" src="assets/icone-voltar.png" alt="" />
@@ -75,8 +18,14 @@
             type="text"
             [(ngModel)]="filtroCliente"
             [ngModelOptions]="{ standalone: true }"
+            (keyup.enter)="aplicarFiltros()"
           />
-          <button class="botao-pesquisa" type="button" aria-label="Pesquisar por cliente">
+          <button
+            class="botao-pesquisa"
+            type="button"
+            aria-label="Pesquisar por cliente"
+            (click)="aplicarFiltros()"
+          >
             <img class="icone-pesquisa" src="assets/icone-lupa.png" alt="" />
           </button>
         </div>
@@ -90,9 +39,12 @@
             id="filtro-tecnico-os"
             [(ngModel)]="filtroTecnico"
             [ngModelOptions]="{ standalone: true }"
+            (change)="aplicarFiltros()"
           >
             <option value="">Todos</option>
-            <option *ngFor="let tecnico of tecnicosDisponiveis" [value]="tecnico">{{ tecnico }}</option>
+            <option *ngFor="let tecnico of tecnicosDisponiveis" [value]="tecnico">
+              {{ tecnico }}
+            </option>
           </select>
           <img class="icone-dropdown-campo" src="assets/icone-dropdown.png" alt="" />
         </span>
@@ -106,6 +58,7 @@
             id="filtro-status-os"
             [(ngModel)]="filtroStatus"
             [ngModelOptions]="{ standalone: true }"
+            (change)="aplicarFiltros()"
           >
             <option value="">Todos</option>
             <option *ngFor="let status of statusDisponiveis" [value]="status">{{ status }}</option>
@@ -114,7 +67,12 @@
         </span>
       </div>
 
-      <button class="botao-filtro" type="button" aria-label="Filtrar ordens de servico">
+      <button
+        class="botao-filtro"
+        type="button"
+        aria-label="Filtrar ordens de servico"
+        (click)="aplicarFiltros()"
+      >
         <img class="icone-filtro" src="assets/icone-filtro.png" alt="" />
       </button>
     </section>
@@ -139,7 +97,11 @@
           <span>{{ ordem.status }}</span>
           <span>{{ ordem.tecnico }}</span>
 
-          <a class="botao-editar-ordem" [routerLink]="['/ordens-servico/editar', ordem.id]" aria-label="Editar ordem de servico">
+          <a
+            class="botao-editar-ordem"
+            [routerLink]="['/ordens-servico/editar', ordem.id]"
+            aria-label="Editar ordem de servico"
+          >
             <img class="icone-acao" src="assets/icone-editar-lapis.png" alt="" />
           </a>
         </div>

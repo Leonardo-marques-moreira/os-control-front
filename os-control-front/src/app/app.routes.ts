@@ -16,32 +16,43 @@ import { OrdensServicoVisualizar } from './pages/ordens-servico-visualizar/orden
 import { Tecnicos } from './pages/tecnicos/tecnicos';
 import { TecnicosLista } from './pages/tecnicos-lista/tecnicos-lista';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
+import { LayoutAutenticado } from './layouts/layout-autenticado/layout-autenticado';
+
+const rotasAutenticadas: Routes = [
+  { path: 'home', component: Home },
+  { path: 'clientes/novo', component: Clientes, canActivate: [adminGuard] },
+  { path: 'clientes/editar/:id', component: Clientes, canActivate: [adminGuard] },
+  { path: 'clientes', component: ClientesLista, canActivate: [adminGuard] },
+  { path: 'tecnicos/novo', component: Tecnicos, canActivate: [adminGuard] },
+  { path: 'tecnicos/editar/:id', component: Tecnicos, canActivate: [adminGuard] },
+  { path: 'tecnicos', component: TecnicosLista, canActivate: [adminGuard] },
+  { path: 'pecas/novo', component: Pecas, canActivate: [adminGuard] },
+  { path: 'pecas/editar/:id', component: Pecas, canActivate: [adminGuard] },
+  { path: 'pecas', component: PecasLista, canActivate: [adminGuard] },
+  { path: 'servicos/novo', component: Servicos, canActivate: [adminGuard] },
+  { path: 'servicos/editar/:id', component: Servicos, canActivate: [adminGuard] },
+  { path: 'servicos', component: ServicosLista, canActivate: [adminGuard] },
+  { path: 'orcamentos/novo', component: Orcamentos },
+  { path: 'orcamentos/editar/:orcamentoId', component: Orcamentos },
+  { path: 'orcamentos', component: OrcamentosLista },
+  { path: 'ordens-servico/criar', component: OrdensServico },
+  { path: 'ordens-servico/importar', component: OrdensServicoImportar },
+  { path: 'ordens-servico/importar/:orcamentoId', component: OrdensServico },
+  { path: 'ordens-servico/editar/:ordemId', component: OrdensServico },
+  { path: 'ordens-servico/visualizar', component: OrdensServicoVisualizar },
+  { path: 'ordens-servico', component: OrdensServicoMenu },
+];
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: Login },
-  { path: 'home', component: Home, canActivate: [authGuard] },
-  { path: 'clientes/novo', component: Clientes, canActivate: [authGuard] },
-  { path: 'clientes/editar/:id', component: Clientes, canActivate: [authGuard] },
-  { path: 'clientes', component: ClientesLista, canActivate: [authGuard] },
-  { path: 'tecnicos/novo', component: Tecnicos, canActivate: [authGuard] },
-  { path: 'tecnicos/editar/:id', component: Tecnicos, canActivate: [authGuard] },
-  { path: 'tecnicos', component: TecnicosLista, canActivate: [authGuard] },
-  { path: 'pecas/novo', component: Pecas, canActivate: [authGuard] },
-  { path: 'pecas/editar/:id', component: Pecas, canActivate: [authGuard] },
-  { path: 'pecas', component: PecasLista, canActivate: [authGuard] },
-  { path: 'servicos/novo', component: Servicos, canActivate: [authGuard] },
-  { path: 'servicos/editar/:id', component: Servicos, canActivate: [authGuard] },
-  { path: 'servicos', component: ServicosLista, canActivate: [authGuard] },
-  { path: 'orcamentos/novo', component: Orcamentos, canActivate: [authGuard] },
-  { path: 'orcamentos/editar/:orcamentoId', component: Orcamentos, canActivate: [authGuard] },
-  { path: 'orcamentos', component: OrcamentosLista, canActivate: [authGuard] },
-  { path: 'ordens-servico/criar', component: OrdensServico, canActivate: [authGuard] },
-  { path: 'ordens-servico/importar', component: OrdensServicoImportar, canActivate: [authGuard] },
-  { path: 'ordens-servico/importar/:orcamentoId', component: OrdensServico, canActivate: [authGuard] },
-  { path: 'ordens-servico/editar/:ordemId', component: OrdensServico, canActivate: [authGuard] },
-  { path: 'ordens-servico/visualizar', component: OrdensServicoVisualizar, canActivate: [authGuard] },
-  { path: 'ordens-servico', component: OrdensServicoMenu, canActivate: [authGuard] },
   { path: 'ordens-de-servicos', redirectTo: 'ordens-servico', pathMatch: 'full' },
+  {
+    path: '',
+    component: LayoutAutenticado,
+    canActivate: [authGuard],
+    children: rotasAutenticadas,
+  },
   { path: '**', redirectTo: 'login' }
 ];

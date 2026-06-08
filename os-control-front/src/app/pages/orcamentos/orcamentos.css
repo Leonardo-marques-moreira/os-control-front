@@ -1,69 +1,3 @@
-.pagina-orcamentos {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
-.conteudo-orcamentos {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  padding: 18px 34px 42px;
-  background: #f2efef;
-  overflow: auto;
-}
-
-.cabecalho-pagina {
-  min-height: 92px;
-  margin-bottom: 28px;
-}
-
-.botao-voltar {
-  top: 14px;
-  left: 0;
-  width: 42px;
-  height: 42px;
-}
-
-.titulo-pagina {
-  font-size: clamp(46px, 4.8vw, 56px);
-}
-
-.formulario-orcamento {
-  max-width: 1088px;
-  margin: 0 auto;
-}
-
-.campo-formulario {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.rotulo-campo {
-  font-size: 18px;
-  color: #5d5454;
-}
-
-.entrada-campo {
-  width: 100%;
-  height: 42px;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 18px;
-  outline: none;
-  background: #f8f8f8;
-  font-size: 20px;
-  color: #544b4b;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
-}
-
-.entrada-campo-bloqueada {
-  background: #d3d3d3;
-  color: #4d4747;
-}
-
 .entrada-campo[readonly] {
   cursor: default;
 }
@@ -112,28 +46,11 @@
 }
 
 .abas-itens {
-  display: flex;
-  gap: 10px;
   margin: 26px 0 6px;
-}
-
-.aba-item {
-  min-width: 132px;
-  height: 42px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 14px;
-  background: #f7f7f7;
-  font-size: 24px;
-  color: #5d5454;
-  cursor: pointer;
-  transition: background-color 120ms ease, color 120ms ease;
 }
 
 .aba-ativa {
   min-width: 214px;
-  background: #8f8a8a;
-  color: #2e2a2a;
 }
 
 .painel-itens {
@@ -141,84 +58,6 @@
   padding: 14px 30px 18px;
   border-radius: 16px;
   background: #fbfbfb;
-}
-
-.barra-pesquisa {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: min(100%, 286px);
-  height: 34px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: #d8d3d3;
-  text-align: left;
-  cursor: pointer;
-}
-
-.icone-pesquisa {
-  display: block;
-  width: 20px;
-  height: 22px;
-  object-fit: contain;
-}
-
-.texto-pesquisa {
-  font-size: 18px;
-  color: #5d5454;
-  white-space: nowrap;
-}
-
-.cabecalho-lista {
-  margin-top: 18px;
-  padding: 0 28px 10px;
-  border-bottom: 1px solid rgba(93, 84, 84, 0.52);
-  font-size: 18px;
-  color: #5d5454;
-}
-
-.cabecalho-lista,
-.linha-item {
-  align-items: center;
-}
-
-.corpo-lista {
-  min-height: 220px;
-  padding-top: 6px;
-}
-
-.linha-item {
-  min-height: 46px;
-  padding: 0 28px;
-  border-radius: 12px;
-  font-size: 18px;
-  color: #5d5454;
-}
-
-.linha-item:hover {
-  background: rgba(216, 211, 211, 0.28);
-}
-
-.grade-servicos {
-  display: grid;
-  grid-template-columns: 94px minmax(0, 1fr) 224px;
-  gap: 18px;
-}
-
-.grade-pecas {
-  display: grid;
-  grid-template-columns: 94px minmax(0, 1.2fr) 90px 160px 170px;
-  gap: 18px;
-}
-
-.coluna-quantidade {
-  text-align: center;
-}
-
-.coluna-unitario,
-.coluna-valor {
-  text-align: right;
 }
 
 .grade-totais {
@@ -254,35 +93,18 @@
   margin-top: 2px;
 }
 
-.entrada-observacao {
-  width: 100%;
-  min-height: 98px;
-  padding: 18px 22px;
-  border: 0;
-  border-radius: 18px;
-  outline: none;
-  resize: none;
-  background: #fbfbfb;
-  font-size: 18px;
-  color: #544b4b;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
-}
-
 .botao-confirmar {
   width: 190px;
   min-height: 74px;
   padding: 0 22px;
   border: 0;
   border-radius: 22px;
+  background: #0da206;
   font-size: 22px;
   line-height: 1.1;
+  color: #ffffff;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
-}
-
-.botao-confirmar {
-  background: #0da206;
-  color: #ffffff;
 }
 
 .botao-confirmar:hover {
@@ -293,51 +115,8 @@
   transform: translateY(1px);
 }
 
-.sobreposicao-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 120;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
-  background: rgba(184, 184, 184, 0.48);
-  backdrop-filter: blur(8px);
-}
-
-.modal-calendario,
-.modal-confirmacao-pdf,
-.modal-selecao-servico,
-.modal-selecao-peca {
-  position: relative;
-  border-radius: 18px;
-  background: #f4f4f4;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
 .botao-fechar-modal {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  line-height: 1;
   color: #514949;
-  cursor: pointer;
-}
-
-.icone-fechar-modal {
-  display: block;
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
 }
 
 .modal-confirmacao-pdf {
@@ -395,148 +174,6 @@
   background: #0a8b05;
 }
 
-.modal-calendario {
-  width: min(466px, calc(100vw - 48px));
-  padding: 58px 38px 34px;
-}
-
-.botao-fechar-calendario {
-  top: 16px;
-  right: 18px;
-  width: 28px;
-  height: 28px;
-  font-size: 0;
-}
-
-.icone-fechar-calendario {
-  display: block;
-  width: 22px;
-  height: 22px;
-}
-
-.cabecalho-calendario {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.botao-navegacao-calendario {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border: 0;
-  border-radius: 50%;
-  background: #ece8e8;
-  color: #514949;
-  cursor: pointer;
-}
-
-.icone-navegacao-calendario {
-  width: 26px;
-  height: 26px;
-}
-
-.titulo-calendario {
-  font-size: 28px;
-  text-align: center;
-  color: #5d5454;
-}
-
-.grade-semana,
-.grade-calendario {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.grade-semana {
-  margin-bottom: 10px;
-}
-
-.dia-semana,
-.dia-calendario {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 54px;
-  font-size: 22px;
-  font-weight: 400;
-  color: #5d5454;
-}
-
-.dia-semana.domingo,
-.dia-domingo {
-  color: #c45855;
-}
-
-.dia-calendario {
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  cursor: pointer;
-}
-
-.dia-selecionado {
-  width: 32px;
-  min-height: 32px;
-  justify-self: center;
-  align-self: center;
-  border-radius: 6px;
-  background: #af4b47;
-  color: #1f1a1a;
-}
-
-.dia-vazio {
-  min-height: 54px;
-}
-
-.modal-selecao-servico {
-  display: flex;
-  flex-direction: column;
-  width: min(1136px, calc(100vw - 96px));
-  min-height: 460px;
-  padding: 58px 0 0;
-  overflow: hidden;
-}
-
-.cabecalho-lista-modal-servico {
-  display: grid;
-  grid-template-columns: 78px minmax(0, 1fr) 230px;
-  gap: 24px;
-  align-items: center;
-  padding: 0 42px 16px;
-  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
-  font-size: 20px;
-  color: #5d5454;
-}
-
-.corpo-lista-modal-servico {
-  flex: 1;
-  min-height: 0;
-  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
-  overflow: auto;
-}
-
-.rodape-modal-servico {
-  display: grid;
-  grid-template-columns: 78px minmax(260px, 1fr) 230px 150px;
-  gap: 18px;
-  align-items: end;
-  padding: 18px 42px 34px;
-}
-
-.campo-modal-servico {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 18px;
-  color: #5d5454;
-}
-
 .botao-fechar-modal-servico {
   top: 12px;
   right: 18px;
@@ -546,259 +183,18 @@
   height: 42px;
 }
 
-.entrada-id-modal,
-.campo-modal-total .entrada-campo {
-  background: #d3d3d3;
-}
-
 .campo-modal-servico-id .entrada-campo,
 .campo-modal-servico-valor .entrada-campo {
   width: 100%;
 }
 
-.botao-ok-modal {
-  display: block;
-  min-width: 248px;
-  height: 62px;
-  margin: 0 auto;
-  padding: 0 28px;
-  border: 0;
-  border-radius: 18px;
-  background: #079700;
-  font-size: 30px;
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.botao-ok-modal-servico {
-  width: 150px;
-  min-width: 150px;
-  height: 48px;
-  margin: 0;
-  padding: 0 18px;
-  align-self: end;
-  justify-self: end;
-  font-size: 20px;
-}
-
-.modal-selecao-peca {
-  display: flex;
-  flex-direction: column;
-  width: min(1240px, calc(100vw - 180px));
-  height: min(760px, calc(100vh - 120px));
-  max-height: calc(100vh - 120px);
-  padding: 48px 0 0;
-  border-radius: 22px;
-  overflow: hidden;
-}
-
-.cabecalho-lista-modal-peca {
-  display: grid;
-  grid-template-columns: 84px minmax(0, 1fr) 88px 176px 176px;
-  gap: 24px;
-  align-items: center;
-  padding: 0 38px 16px;
-  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
-  font-size: 20px;
-  color: #5d5454;
-}
-
-.corpo-lista-modal-peca {
-  flex: 1;
-  min-height: 0;
-  border-bottom: 1px solid rgba(93, 84, 84, 0.55);
-  overflow: auto;
-}
-
-.linha-modal {
-  width: 100%;
-  padding: 12px 38px;
-  border: 0;
-  background: transparent;
-  font-size: 18px;
-  color: #5d5454;
-  text-align: left;
-  cursor: pointer;
-}
-
-.linha-modal:hover {
-  background: rgba(216, 211, 211, 0.28);
-}
-
-.grade-modal-servico {
-  display: grid;
-  grid-template-columns: 78px minmax(0, 1fr) 230px;
-  gap: 24px;
-  align-items: center;
-}
-
-.grade-modal-peca {
-  display: grid;
-  grid-template-columns: 84px minmax(0, 1fr) 88px 176px 176px;
-  gap: 24px;
-  align-items: center;
-}
-
 .rodape-modal-peca {
   display: grid;
-  grid-template-columns: 78px minmax(240px, 1.1fr) 86px 148px 148px 96px;
+  grid-template-columns: 78px minmax(240px, 1.1fr) 86px 148px 148px minmax(326px, auto);
   gap: 16px;
   align-items: end;
   justify-content: center;
   padding: 18px 32px 34px;
-}
-
-.campo-modal-peca {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 18px;
-  color: #5d5454;
-}
-
-.campo-modal-nome {
-  position: relative;
-}
-
-.botao-fechar-modal-peca {
-  top: 12px;
-  right: 16px;
-}
-
-.campo-pesquisa-modal {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 46px;
-  padding: 0 18px;
-  border-radius: 18px;
-  background: #f8f8f8;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
-}
-
-.campo-pesquisa-container {
-  position: relative;
-}
-
-.campo-pesquisa-modal-selecionada {
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.texto-item-selecionado {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.botao-limpar-selecao {
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #ded8d8;
-  font-size: 18px;
-  line-height: 1;
-  color: #544b4b;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.botao-limpar-selecao:hover {
-  background: #d0c9c9;
-}
-
-.dropdown-pesquisa-modal {
-  position: absolute;
-  right: 0;
-  bottom: calc(100% + 10px);
-  left: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  max-height: 220px;
-  border-radius: 18px;
-  background: #f8f8f8;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
-  overflow: auto;
-}
-
-.item-dropdown-modal {
-  display: grid;
-  grid-template-columns: 68px minmax(0, 1fr) 120px;
-  gap: 12px;
-  align-items: center;
-  width: 100%;
-  min-height: 48px;
-  padding: 0 16px;
-  border: 0;
-  background: transparent;
-  font-size: 17px;
-  color: #544b4b;
-  text-align: left;
-  cursor: pointer;
-}
-
-.item-dropdown-modal:hover {
-  background: rgba(216, 211, 211, 0.36);
-}
-
-.item-dropdown-modal-id {
-  white-space: nowrap;
-}
-
-.item-dropdown-modal-nome {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.item-dropdown-modal-valor {
-  text-align: right;
-  white-space: nowrap;
-}
-
-.rodape-modal-peca .entrada-campo {
-  height: 42px;
-}
-
-.campo-modal-id .entrada-campo {
-  width: 58px;
-}
-
-.campo-modal-qtd .entrada-campo {
-  width: 72px;
-  text-align: center;
-}
-
-.campo-modal-unitario .entrada-campo,
-.campo-modal-total .entrada-campo {
-  width: 140px;
-}
-
-.entrada-pesquisa-modal {
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-size: 18px;
-  color: #544b4b;
-}
-
-.entrada-pesquisa-modal::placeholder {
-  color: #7d7575;
-}
-
-.linha-modal-selecionada {
-  cursor: default;
-}
-
-.linha-modal-selecionada:hover {
-  background: transparent;
 }
 
 .botao-ok-modal-peca {
@@ -812,10 +208,6 @@
 }
 
 @media (max-width: 1280px) {
-  .conteudo-orcamentos {
-    padding-inline: 28px;
-  }
-
   .grade-inicial {
     grid-template-columns: 74px minmax(240px, 1fr) minmax(220px, 0.52fr);
   }
@@ -830,11 +222,6 @@
 }
 
 @media (max-width: 980px) {
-  .conteudo-orcamentos {
-    left: 210px;
-    padding: 18px 24px 36px;
-  }
-
   .cabecalho-pagina {
     min-height: 82px;
   }
@@ -861,38 +248,15 @@
     grid-template-columns: 1fr;
   }
 
-  .grade-servicos {
-    grid-template-columns: 72px minmax(0, 1fr) 170px;
-  }
-
-  .grade-pecas {
-    grid-template-columns: 72px minmax(0, 1.1fr) 72px 130px 136px;
-  }
-
-  .cabecalho-lista,
-  .linha-item {
-    padding-inline: 16px;
-  }
-
   .modal-selecao-servico {
     width: calc(100vw - 72px);
   }
 
-  .modal-selecao-peca {
-    width: calc(100vw - 96px);
-    height: min(700px, calc(100vh - 96px));
-    max-height: calc(100vh - 96px);
-  }
-
   .cabecalho-lista-modal-servico {
-    grid-template-columns: 68px minmax(0, 1fr) 190px;
+    grid-template-columns: 68px minmax(0, 1fr) 190px 40px;
     gap: 16px;
     padding-inline: 24px;
     font-size: 18px;
-  }
-
-  .linha-modal {
-    padding-inline: 24px;
   }
 
   .grade-modal-servico {
@@ -900,25 +264,19 @@
     gap: 16px;
   }
 
+  .grade-modal-servico-selecionado {
+    grid-template-columns: 68px minmax(0, 1fr) 190px 40px;
+    gap: 16px;
+  }
+
   .rodape-modal-servico {
-    grid-template-columns: 68px minmax(180px, 1fr) 190px 132px;
+    grid-template-columns: 68px minmax(180px, 1fr) 190px minmax(286px, auto);
     gap: 12px;
     padding: 16px 24px 24px;
   }
 
-  .cabecalho-lista-modal-peca {
-    grid-template-columns: 72px minmax(0, 1fr) 74px 132px 132px;
-    gap: 14px;
-    padding-inline: 24px;
-  }
-
-  .grade-modal-peca {
-    grid-template-columns: 72px minmax(0, 1fr) 74px 132px 132px;
-    gap: 14px;
-  }
-
   .rodape-modal-peca {
-    grid-template-columns: 70px minmax(200px, 1fr) 78px 132px 132px 92px;
+    grid-template-columns: 70px minmax(200px, 1fr) 78px 132px 132px minmax(286px, auto);
     gap: 12px;
     padding: 16px 24px 24px;
   }
@@ -942,14 +300,9 @@
     justify-self: stretch;
   }
 
-  .abas-itens {
-    flex-wrap: wrap;
-  }
-
   .aba-item,
   .aba-ativa {
     min-width: 0;
-    flex: 1 1 180px;
   }
 
   .entrada-total {
@@ -962,26 +315,6 @@
 
   .painel-itens {
     padding-inline: 16px;
-  }
-
-  .barra-pesquisa {
-    width: 100%;
-  }
-
-  .grade-servicos {
-    grid-template-columns: 54px minmax(0, 1fr) 118px;
-  }
-
-  .grade-pecas {
-    grid-template-columns: 46px minmax(0, 1fr) 52px 90px 96px;
-    gap: 10px;
-    font-size: 15px;
-  }
-
-  .cabecalho-lista,
-  .linha-item {
-    padding-inline: 8px;
-    font-size: 15px;
   }
 
   .modal-selecao-servico {
@@ -998,19 +331,19 @@
   }
 
   .cabecalho-lista-modal-servico {
-    grid-template-columns: 56px minmax(0, 1fr) 128px;
+    grid-template-columns: 56px minmax(0, 1fr) 128px 36px;
     gap: 10px;
-    padding-inline: 16px;
-    font-size: 15px;
-  }
-
-  .linha-modal {
     padding-inline: 16px;
     font-size: 15px;
   }
 
   .grade-modal-servico {
     grid-template-columns: 56px minmax(0, 1fr) 128px;
+    gap: 10px;
+  }
+
+  .grade-modal-servico-selecionado {
+    grid-template-columns: 56px minmax(0, 1fr) 128px 36px;
     gap: 10px;
   }
 
@@ -1026,17 +359,22 @@
     padding: 18px 16px 28px;
   }
 
-  .campo-modal-servico-nome,
-  .campo-modal-nome {
-    grid-column: 1 / -1;
-  }
-
   .botao-ok-modal-servico,
-  .botao-ok-modal-peca {
+  .botao-ok-modal-peca,
+  .acoes-modal-itens {
     grid-column: 1 / -1;
     width: 100%;
-    min-width: 0;
     margin-top: 6px;
+  }
+
+  .acoes-modal-itens {
+    flex-direction: column;
+  }
+
+  .botao-adicionar-item-modal,
+  .botao-confirmar-itens-modal {
+    width: 100%;
+    min-width: 0;
   }
 
   .modal-selecao-peca {
@@ -1046,7 +384,7 @@
   }
 
   .cabecalho-lista-modal-peca {
-    grid-template-columns: 56px minmax(0, 1fr) 56px 96px 96px;
+    grid-template-columns: 56px minmax(0, 1fr) 56px 96px 96px 36px;
     gap: 10px;
     padding-inline: 16px;
     font-size: 15px;
@@ -1057,50 +395,13 @@
     gap: 10px;
   }
 
-  .item-dropdown-modal {
-    grid-template-columns: 56px minmax(0, 1fr) 96px;
-    font-size: 15px;
-  }
-
-  .campo-modal-id,
-  .campo-modal-qtd,
-  .campo-modal-unitario,
-  .campo-modal-total {
-    min-width: 0;
+  .grade-modal-peca-selecionado {
+    grid-template-columns: 56px minmax(0, 1fr) 56px 96px 96px 36px;
+    gap: 10px;
   }
 }
 
 @media (max-width: 540px) {
-  .sobreposicao-modal {
-    padding: 16px;
-  }
-
-  .modal-calendario {
-    padding: 54px 18px 24px;
-  }
-
-  .botao-fechar-calendario {
-    top: 14px;
-    right: 12px;
-    width: 24px;
-    height: 24px;
-  }
-
-  .icone-fechar-calendario {
-    width: 20px;
-    height: 20px;
-  }
-
-  .dia-semana,
-  .dia-calendario {
-    min-height: 42px;
-    font-size: 18px;
-  }
-
-  .titulo-calendario {
-    font-size: 24px;
-  }
-
   .botao-navegacao-calendario {
     width: 34px;
     height: 34px;

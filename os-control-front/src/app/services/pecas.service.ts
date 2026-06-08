@@ -1,26 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { PecaApi, PecaLista, PecaSalva } from '../models/peca.model';
+import { formatarMoeda } from '../utils/formatacao';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PecasService {
-  private readonly apiUrl = 'http://localhost:8080/peca';
+  private readonly apiUrl = `${environment.apiBaseUrl}/peca`;
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<PecaSalva[]> {
-    return this.http.get<PecaApi[]>(this.apiUrl).pipe(map((pecas) => pecas.map((peca) => this.mapearPecaSalva(peca))));
+    return this.http
+      .get<PecaApi[]>(this.apiUrl)
+      .pipe(map((pecas) => pecas.map((peca) => this.mapearPecaSalva(peca))));
   }
 
   listarLista(): Observable<PecaLista[]> {
-    return this.http.get<PecaApi[]>(this.apiUrl).pipe(map((pecas) => pecas.map((peca) => this.mapearPecaLista(peca))));
+    return this.http
+      .get<PecaApi[]>(this.apiUrl)
+      .pipe(map((pecas) => pecas.map((peca) => this.mapearPecaLista(peca))));
   }
 
   buscarPorId(id: string): Observable<PecaSalva> {
-    return this.http.get<PecaApi>(`${this.apiUrl}/${id}`).pipe(map((peca) => this.mapearPecaSalva(peca)));
+    return this.http
+      .get<PecaApi>(`${this.apiUrl}/${id}`)
+      .pipe(map((peca) => this.mapearPecaSalva(peca)));
   }
 
   salvar(peca: PecaSalva): Observable<PecaSalva> {
@@ -30,10 +38,14 @@ export class PecasService {
     };
 
     if (!peca.id) {
-      return this.http.post<PecaApi>(this.apiUrl, dados).pipe(map((novaPeca) => this.mapearPecaSalva(novaPeca)));
+      return this.http
+        .post<PecaApi>(this.apiUrl, dados)
+        .pipe(map((novaPeca) => this.mapearPecaSalva(novaPeca)));
     }
 
-    return this.http.put<PecaApi>(`${this.apiUrl}/${peca.id}`, dados).pipe(map((pecaAtualizada) => this.mapearPecaSalva(pecaAtualizada)));
+    return this.http
+      .put<PecaApi>(`${this.apiUrl}/${peca.id}`, dados)
+      .pipe(map((pecaAtualizada) => this.mapearPecaSalva(pecaAtualizada)));
   }
 
   excluir(id: string): Observable<void> {
@@ -44,7 +56,7 @@ export class PecasService {
     return {
       id: String(peca.id).padStart(2, '0'),
       nome: peca.descricao,
-      valor: this.formatarMoeda(peca.valorUnitario),
+      valor: formatarMoeda(peca.valorUnitario),
       valorUnitario: peca.valorUnitario,
     };
   }
@@ -53,14 +65,7 @@ export class PecasService {
     return {
       id: String(peca.id).padStart(2, '0'),
       nome: peca.descricao,
-      valor: this.formatarMoeda(peca.valorUnitario),
+      valor: formatarMoeda(peca.valorUnitario),
     };
-  }
-
-  private formatarMoeda(valor: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(valor);
   }
 }

@@ -1,14 +1,5 @@
 import { PecaSelecionada, ServicoSelecionado } from './orcamento.model';
 
-export type DiaCalendario =
-  | {
-      data: Date;
-      domingo: boolean;
-      numero: number;
-      selecionado: boolean;
-    }
-  | null;
-
 export type AbaOs = 'pecas' | 'servicos';
 
 export interface OrdemServicoSalva {
@@ -22,11 +13,13 @@ export interface OrdemServicoSalva {
   tecnicoId: string;
   tecnicoNome: string;
   dataAbertura: string;
+  dataFechamento?: string;
   observacao: string;
   servicos: ServicoSelecionado[];
   pecas: PecaSelecionada[];
   desconto: string;
   totalOs: string;
+  totalOsValor?: number;
 }
 
 export interface OrdemServicoLista {

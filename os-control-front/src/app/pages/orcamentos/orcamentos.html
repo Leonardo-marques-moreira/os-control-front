@@ -1,67 +1,5 @@
-﻿<section class="pagina-orcamentos">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a
-        class="item-home"
-        routerLink="/home"
-        routerLinkActive="item-home-ativo"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Or&ccedil;amentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>T&eacute;cnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Pe&ccedil;as</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-orcamentos">
+<section class="pagina-interna pagina-orcamentos">
+  <main class="conteudo-pagina-padrao conteudo-orcamentos">
     <div class="cabecalho-pagina">
       <a class="botao-voltar" routerLink="/orcamentos" aria-label="Voltar para orcamentos">
         <img class="icone-voltar" src="assets/icone-voltar.png" alt="" />
@@ -74,12 +12,24 @@
       <div class="grade-inicial">
         <label class="campo-formulario campo-id" for="orcamento-id">
           <span class="rotulo-campo">ID</span>
-          <input class="entrada-campo entrada-campo-bloqueada" id="orcamento-id" type="text" [value]="orcamentoId" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada"
+            id="orcamento-id"
+            type="text"
+            [value]="orcamentoId"
+            readonly
+          />
         </label>
 
         <label class="campo-formulario campo-nome" for="orcamento-nome">
           <span class="rotulo-campo">Nome do orçamento</span>
-          <input class="entrada-campo" id="orcamento-nome" type="text" [(ngModel)]="nomeOrcamento" name="orcamentoNome" />
+          <input
+            class="entrada-campo"
+            id="orcamento-nome"
+            type="text"
+            [(ngModel)]="nomeOrcamento"
+            name="orcamentoNome"
+          />
         </label>
 
         <div class="campo-formulario campo-data">
@@ -170,39 +120,76 @@
       <div class="grade-totais">
         <label class="campo-formulario" for="total-servicos">
           <span class="rotulo-campo">Valor total dos servi&ccedil;os</span>
-          <input class="entrada-campo entrada-campo-bloqueada entrada-total" id="total-servicos" type="text" [value]="totalServicos" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada entrada-total"
+            id="total-servicos"
+            type="text"
+            [value]="totalServicos"
+            readonly
+          />
         </label>
 
         <label class="campo-formulario" for="total-pecas">
           <span class="rotulo-campo">Valor total dos produtos/pe&ccedil;as</span>
-          <input class="entrada-campo entrada-campo-bloqueada entrada-total" id="total-pecas" type="text" [value]="totalPecas" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada entrada-total"
+            id="total-pecas"
+            type="text"
+            [value]="totalPecas"
+            readonly
+          />
         </label>
 
         <label class="campo-formulario" for="desconto-orcamento">
           <span class="rotulo-campo">Valor desconto</span>
-          <input class="entrada-campo" id="desconto-orcamento" type="text" inputmode="decimal" [(ngModel)]="desconto" name="descontoOrcamento" />
+          <input
+            class="entrada-campo"
+            id="desconto-orcamento"
+            type="text"
+            inputmode="decimal"
+            [(ngModel)]="desconto"
+            name="descontoOrcamento"
+          />
         </label>
 
         <label class="campo-formulario campo-total-orcamento" for="total-orcamento">
           <span class="rotulo-campo">Valor total do or&ccedil;amento</span>
-          <input class="entrada-campo entrada-campo-bloqueada entrada-total" id="total-orcamento" type="text" [value]="totalOrcamento" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada entrada-total"
+            id="total-orcamento"
+            type="text"
+            [value]="totalOrcamento"
+            readonly
+          />
         </label>
       </div>
 
       <div class="rodape-formulario">
         <label class="campo-formulario campo-observacao" for="observacao-orcamento">
           <span class="rotulo-campo rotulo-observacao">Observa&ccedil;&atilde;o</span>
-          <textarea class="entrada-observacao" id="observacao-orcamento" [(ngModel)]="observacao" name="orcamentoObservacao"></textarea>
+          <textarea
+            class="entrada-observacao"
+            id="observacao-orcamento"
+            [(ngModel)]="observacao"
+            name="orcamentoObservacao"
+          ></textarea>
         </label>
 
-        <button class="botao-confirmar" type="button" (click)="confirmar()">{{ textoBotao }}</button>
+        <button class="botao-confirmar" type="button" (click)="confirmar()">
+          {{ textoBotao }}
+        </button>
       </div>
     </form>
   </main>
 
   <div class="sobreposicao-modal" *ngIf="modalConfirmacaoPdfAberto" (click)="cancelarExibicaoPdf()">
     <div class="modal-confirmacao-pdf" (click)="$event.stopPropagation()">
-      <button class="botao-fechar-modal" type="button" (click)="cancelarExibicaoPdf()" aria-label="Fechar confirmacao do PDF">
+      <button
+        class="botao-fechar-modal"
+        type="button"
+        (click)="cancelarExibicaoPdf()"
+        aria-label="Fechar confirmacao do PDF"
+      >
         <img class="icone-fechar-modal" src="assets/icone-fechar.png" alt="" />
       </button>
 
@@ -212,27 +199,58 @@
       </div>
 
       <div class="acoes-modal-confirmacao-pdf">
-        <button class="botao-modal-confirmacao-secundario" type="button" (click)="cancelarExibicaoPdf()">N&atilde;o</button>
-        <button class="botao-modal-confirmacao-primario" type="button" (click)="confirmarExibicaoPdf()">Sim</button>
+        <button
+          class="botao-modal-confirmacao-secundario"
+          type="button"
+          (click)="cancelarExibicaoPdf()"
+        >
+          N&atilde;o
+        </button>
+        <button
+          class="botao-modal-confirmacao-primario"
+          type="button"
+          (click)="confirmarExibicaoPdf()"
+        >
+          Sim
+        </button>
       </div>
     </div>
   </div>
 
   <div class="sobreposicao-modal" *ngIf="calendarioAberto" (click)="fecharCalendario()">
     <div class="modal-calendario" (click)="$event.stopPropagation()">
-      <button class="botao-fechar-modal botao-fechar-calendario" type="button" (click)="fecharCalendario()" aria-label="Fechar calendario">
+      <button
+        class="botao-fechar-modal botao-fechar-calendario"
+        type="button"
+        (click)="fecharCalendario()"
+        aria-label="Fechar calendario"
+      >
         <img class="icone-fechar-calendario" src="assets/icone-fechar.png" alt="" />
       </button>
 
       <div class="cabecalho-calendario">
-        <button class="botao-navegacao-calendario" type="button" (click)="mesAnterior()" aria-label="Mes anterior">
+        <button
+          class="botao-navegacao-calendario"
+          type="button"
+          (click)="mesAnterior()"
+          aria-label="Mes anterior"
+        >
           <img class="icone-navegacao-calendario" src="assets/icone-voltar-calendario.png" alt="" />
         </button>
 
         <div class="titulo-calendario">{{ tituloCalendario }}</div>
 
-        <button class="botao-navegacao-calendario" type="button" (click)="proximoMes()" aria-label="Proximo mes">
-          <img class="icone-navegacao-calendario" src="assets/icone-avancar-calendario.png" alt="" />
+        <button
+          class="botao-navegacao-calendario"
+          type="button"
+          (click)="proximoMes()"
+          aria-label="Proximo mes"
+        >
+          <img
+            class="icone-navegacao-calendario"
+            src="assets/icone-avancar-calendario.png"
+            alt=""
+          />
         </button>
       </div>
 
@@ -269,7 +287,12 @@
 
   <div class="sobreposicao-modal" *ngIf="modalServicoAberto" (click)="fecharModalServico()">
     <div class="modal-selecao-servico" (click)="$event.stopPropagation()">
-      <button class="botao-fechar-modal botao-fechar-modal-servico" type="button" (click)="fecharModalServico()" aria-label="Fechar selecao de servico">
+      <button
+        class="botao-fechar-modal botao-fechar-modal-servico"
+        type="button"
+        (click)="fecharModalServico()"
+        aria-label="Fechar selecao de servico"
+      >
         <img class="icone-fechar-modal" src="assets/icone-fechar.png" alt="" />
       </button>
 
@@ -277,20 +300,37 @@
         <span>Id</span>
         <span>Servi&ccedil;os</span>
         <span>Valor do servi&ccedil;o</span>
+        <span aria-hidden="true"></span>
       </div>
 
       <div class="corpo-lista-modal-servico">
-        <div class="linha-modal linha-modal-selecionada grade-modal-servico" *ngFor="let item of servicosSelecionados">
+        <div
+          class="linha-modal linha-modal-selecionada grade-modal-servico-selecionado"
+          *ngFor="let item of servicosSelecionados; let i = index"
+        >
           <span>{{ item.id }}</span>
           <span>{{ item.nome }}</span>
           <span class="coluna-valor">{{ formatarMoeda(item.valor) }}</span>
+          <button
+            class="botao-remover-item-modal"
+            type="button"
+            (click)="removerServicoSelecionado(i)"
+            aria-label="Remover servico selecionado"
+          >
+            <img class="icone-remover-item-modal" src="assets/icone-fechar.png" alt="" />
+          </button>
         </div>
       </div>
 
       <div class="rodape-modal-servico">
         <label class="campo-modal-servico campo-modal-servico-id">
           <span>Id</span>
-          <input class="entrada-campo entrada-campo-bloqueada entrada-id-modal" type="text" [value]="novoServico.id" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada entrada-id-modal"
+            type="text"
+            [value]="novoServico.id"
+            readonly
+          />
         </label>
 
         <label class="campo-modal-servico campo-modal-servico-nome">
@@ -324,7 +364,10 @@
               </span>
             </ng-template>
 
-            <div class="dropdown-pesquisa-modal" *ngIf="dropdownServicosAberto && servicosDisponiveisFiltrados.length > 0">
+            <div
+              class="dropdown-pesquisa-modal"
+              *ngIf="dropdownServicosAberto && servicosDisponiveisFiltrados.length > 0"
+            >
               <button
                 class="item-dropdown-modal"
                 type="button"
@@ -351,14 +394,35 @@
           />
         </label>
 
-        <button class="botao-ok-modal botao-ok-modal-servico" type="button" (click)="confirmarServico()">Ok</button>
+        <div class="acoes-modal-itens">
+          <button
+            class="botao-ok-modal botao-adicionar-item-modal"
+            type="button"
+            (click)="adicionarServico()"
+          >
+            Adicionar item
+          </button>
+
+          <button
+            class="botao-ok-modal botao-confirmar-itens-modal"
+            type="button"
+            (click)="confirmarServicos()"
+          >
+            Confirmar servi&ccedil;os
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="sobreposicao-modal" *ngIf="modalPecaAberto" (click)="fecharModalPeca()">
     <div class="modal-selecao-peca" (click)="$event.stopPropagation()">
-      <button class="botao-fechar-modal botao-fechar-modal-peca" type="button" (click)="fecharModalPeca()" aria-label="Fechar selecao de peca">
+      <button
+        class="botao-fechar-modal botao-fechar-modal-peca"
+        type="button"
+        (click)="fecharModalPeca()"
+        aria-label="Fechar selecao de peca"
+      >
         <img class="icone-fechar-modal" src="assets/icone-fechar.png" alt="" />
       </button>
 
@@ -368,22 +432,39 @@
         <span>qtd</span>
         <span>Valor unt</span>
         <span>Valor total</span>
+        <span aria-hidden="true"></span>
       </div>
 
       <div class="corpo-lista-modal-peca">
-        <div class="linha-modal linha-modal-selecionada grade-modal-peca" *ngFor="let item of pecasSelecionadas">
+        <div
+          class="linha-modal linha-modal-selecionada grade-modal-peca-selecionado"
+          *ngFor="let item of pecasSelecionadas; let i = index"
+        >
           <span>{{ item.id }}</span>
           <span>{{ item.nome }}</span>
           <span class="coluna-quantidade">{{ item.quantidade }}</span>
           <span class="coluna-unitario">{{ formatarMoeda(item.valorUnitario) }}</span>
           <span class="coluna-valor">{{ formatarMoeda(item.valorTotal) }}</span>
+          <button
+            class="botao-remover-item-modal"
+            type="button"
+            (click)="removerPecaSelecionada(i)"
+            aria-label="Remover peca selecionada"
+          >
+            <img class="icone-remover-item-modal" src="assets/icone-fechar.png" alt="" />
+          </button>
         </div>
       </div>
 
       <div class="rodape-modal-peca">
         <label class="campo-modal-peca campo-modal-id">
           <span>Id</span>
-          <input class="entrada-campo entrada-campo-bloqueada" type="text" [value]="novaPeca.id" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada"
+            type="text"
+            [value]="novaPeca.id"
+            readonly
+          />
         </label>
 
         <label class="campo-modal-peca campo-modal-nome">
@@ -417,7 +498,10 @@
               </span>
             </ng-template>
 
-            <div class="dropdown-pesquisa-modal" *ngIf="dropdownPecasAberto && pecasDisponiveisFiltradas.length > 0">
+            <div
+              class="dropdown-pesquisa-modal"
+              *ngIf="dropdownPecasAberto && pecasDisponiveisFiltradas.length > 0"
+            >
               <button
                 class="item-dropdown-modal"
                 type="button"
@@ -458,10 +542,31 @@
 
         <label class="campo-modal-peca campo-modal-total">
           <span>valor total</span>
-          <input class="entrada-campo entrada-campo-bloqueada" type="text" [value]="totalNovaPeca" readonly />
+          <input
+            class="entrada-campo entrada-campo-bloqueada"
+            type="text"
+            [value]="totalNovaPeca"
+            readonly
+          />
         </label>
 
-        <button class="botao-ok-modal botao-ok-modal-peca" type="button" (click)="confirmarPeca()">Ok</button>
+        <div class="acoes-modal-itens">
+          <button
+            class="botao-ok-modal botao-adicionar-item-modal"
+            type="button"
+            (click)="adicionarPeca()"
+          >
+            Adicionar item
+          </button>
+
+          <button
+            class="botao-ok-modal botao-confirmar-itens-modal"
+            type="button"
+            (click)="confirmarPecas()"
+          >
+            Confirmar pe&ccedil;as/produtos
+          </button>
+        </div>
       </div>
     </div>
   </div>

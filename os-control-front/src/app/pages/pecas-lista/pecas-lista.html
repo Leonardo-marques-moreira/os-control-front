@@ -1,62 +1,5 @@
-﻿<section class="pagina-pecas-lista">
-  <header class="barra-superior">
-    <span class="titulo-sistema">OS Control</span>
-    <span class="usuario-logado">{{ usuarioLogado }}</span>
-  </header>
-
-  <aside class="barra-lateral">
-    <nav class="menu-lateral">
-      <a class="item-home" routerLink="/home" routerLinkActive="item-home-ativo" [routerLinkActiveOptions]="{ exact: true }">
-        Home
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/orcamentos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-orcamentos.png" alt="" />
-        <span>Or&ccedil;amentos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/ordens-servico" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-ordem-servico.png" alt="" />
-        <span>Ordens de Servi&ccedil;os</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/clientes" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-cliente.png" alt="" />
-        <span>Clientes</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/tecnicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-tecnico.png" alt="" />
-        <span>T&eacute;cnicos</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/pecas" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-peca.png" alt="" />
-        <span>Peças</span>
-      </a>
-      <hr class="linha-menu" />
-
-      <a class="item-menu" routerLink="/servicos" routerLinkActive="item-menu-ativo">
-        <img class="icone-menu-lateral" src="assets/icone-servico.png" alt="" />
-        <span>Serviços</span>
-      </a>
-      <hr class="linha-menu" />
-    </nav>
-
-    <button class="botao-sair" type="button" (click)="sair()">
-      <span class="circulo-icone-sair">
-        <img class="icone-sair" src="assets/icone-logout.png" alt="" />
-      </span>
-      <span class="texto-sair">Logout</span>
-    </button>
-  </aside>
-
-  <main class="conteudo-pecas-lista">
+﻿<section class="pagina-interna pagina-pecas-lista">
+  <main class="conteudo-lista-padrao conteudo-pecas-lista">
     <div class="cabecalho-pagina">
       <a class="botao-voltar" routerLink="/home" aria-label="Voltar para Home">
         <img class="icone-voltar" src="assets/icone-voltar.png" alt="" />
@@ -75,8 +18,14 @@
             type="text"
             [(ngModel)]="filtroNome"
             [ngModelOptions]="{ standalone: true }"
+            (keyup.enter)="aplicarFiltros()"
           />
-          <button class="botao-pesquisa" type="button" aria-label="Pesquisar pecas">
+          <button
+            class="botao-pesquisa"
+            type="button"
+            aria-label="Pesquisar pecas"
+            (click)="aplicarFiltros()"
+          >
             <img class="icone-pesquisa" src="assets/icone-lupa.png" alt="" />
           </button>
         </div>
@@ -90,10 +39,16 @@
           type="text"
           [(ngModel)]="filtroId"
           [ngModelOptions]="{ standalone: true }"
+          (keyup.enter)="aplicarFiltros()"
         />
       </div>
 
-      <button class="botao-filtro" type="button" aria-label="Filtrar pecas">
+      <button
+        class="botao-filtro"
+        type="button"
+        aria-label="Filtrar pecas"
+        (click)="aplicarFiltros()"
+      >
         <img class="icone-filtro" src="assets/icone-filtro.png" alt="" />
       </button>
 
@@ -118,11 +73,20 @@
           <span>{{ peca.valor }}</span>
 
           <div class="acoes-item">
-            <a class="botao-acao botao-editar" [routerLink]="['/pecas/editar', peca.id]" aria-label="Editar peca">
+            <a
+              class="botao-acao botao-editar"
+              [routerLink]="['/pecas/editar', peca.id]"
+              aria-label="Editar peca"
+            >
               <img class="icone-acao" src="assets/icone-editar-lapis.png" alt="" />
             </a>
 
-            <button class="botao-acao botao-excluir" type="button" (click)="excluirPeca(peca.id)" aria-label="Excluir peca">
+            <button
+              class="botao-acao botao-excluir"
+              type="button"
+              (click)="excluirPeca(peca.id)"
+              aria-label="Excluir peca"
+            >
               <img class="icone-acao" src="assets/icone-lixeira-deletar.png" alt="" />
             </button>
           </div>

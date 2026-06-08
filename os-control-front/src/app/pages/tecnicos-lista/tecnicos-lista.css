@@ -1,25 +1,7 @@
-.pagina-tecnicos-lista {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
-.conteudo-tecnicos-lista {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  padding: 26px 0 44px;
-  background: #f2efef;
-  overflow: auto;
-}
+/* Ajustes especificos da lista de tecnicos. A estrutura geral fica em styles.css. */
 
 .barra-filtros {
-  grid-template-columns: 352px 90px 44px 1fr;
-}
-
-.entrada-nome {
-  padding-right: 52px;
+  grid-template-columns: 352px 90px 46px 1fr;
 }
 
 .botao-novo-item {
@@ -35,26 +17,17 @@
 
 @media (max-width: 1280px) {
   .barra-filtros {
-    grid-template-columns: minmax(0, 1fr) 90px 44px;
-  }
-
-  .botao-novo-item {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) 90px 46px 1fr;
   }
 }
 
 @media (max-width: 980px) {
-  .conteudo-tecnicos-lista {
-    left: 210px;
+  .barra-filtros {
+    grid-template-columns: minmax(0, 1fr) 82px 46px 1fr;
   }
 }
 
 @media (max-width: 720px) {
-  .conteudo-tecnicos-lista {
-    position: static;
-    padding-top: 128px;
-  }
-
   .barra-filtros {
     grid-template-columns: 1fr;
   }

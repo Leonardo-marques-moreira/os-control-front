@@ -1,17 +1,5 @@
-.pagina-clientes {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
 .conteudo-clientes {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
   padding: 26px 106px 48px;
-  background: #f2efef;
-  overflow: auto;
 }
 
 .cabecalho-pagina {
@@ -251,19 +239,6 @@
   cursor: pointer;
 }
 
-.icone-fechar {
-  display: block;
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-.formulario-veiculo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .titulo-modal {
   margin: 0 0 42px;
   font-size: 41px;
@@ -316,7 +291,7 @@
   .grade-endereco {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
-      'cep rua' 
+      'cep rua'
       'bairro cidade'
       'estado complemento'
       'acao acao';
@@ -334,7 +309,6 @@
 
 @media (max-width: 980px) {
   .conteudo-clientes {
-    left: 210px;
     padding: 26px 30px 36px;
   }
 
@@ -352,5 +326,11 @@
 
   .entrada-campo-menor {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .conteudo-clientes {
+    padding-top: 128px;
   }
 }

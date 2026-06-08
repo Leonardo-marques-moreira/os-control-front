@@ -1,1 +1,33 @@
+@if (mensagemService.visivel()) {
+  <div
+    class="mensagem-topo"
+    [class.mensagem-sucesso]="mensagemService.tipo() === 'sucesso'"
+    [class.mensagem-erro]="mensagemService.tipo() === 'erro'"
+    (click)="mensagemService.fechar()"
+  >
+    {{ mensagemService.texto() }}
+  </div>
+}
+
+@if (mensagemService.dialogoVisivel()) {
+  <div class="sobreposicao-dialogo" (click)="mensagemService.cancelarDialogo()">
+    <div class="dialogo-sistema" (click)="$event.stopPropagation()">
+      <h2 class="titulo-dialogo">{{ mensagemService.dialogoTitulo() }}</h2>
+      <p class="texto-dialogo">{{ mensagemService.dialogoTexto() }}</p>
+
+      <div class="acoes-dialogo">
+        @if (mensagemService.dialogoTipo() === 'confirmacao') {
+          <button class="botao-dialogo botao-dialogo-secundario" type="button" (click)="mensagemService.cancelarDialogo()">
+            {{ mensagemService.dialogoRotuloCancelar() }}
+          </button>
+        }
+
+        <button class="botao-dialogo botao-dialogo-primario" type="button" (click)="mensagemService.confirmarDialogo()">
+          {{ mensagemService.dialogoRotuloConfirmar() }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
 <router-outlet></router-outlet>

@@ -1,37 +1,104 @@
-.pagina-inicial {
-  min-height: 100dvh;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  background: #f2efef;
-  color: rgba(40, 33, 33, 0.82);
-}
-
-.conteudo-principal {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #f2efef;
+.conteudo-home {
+  padding: 32px 24px 40px;
 }
 
 .logo-central {
-  width: min(68vw, 880px);
+  display: block;
+  width: min(56vw, 680px);
   max-width: calc(100% - 80px);
-  max-height: calc(100% - 110px);
+  margin: 0 auto 28px;
   object-fit: contain;
-  transform: translateY(-2%);
+}
+
+.estado-home,
+.alerta-home {
+  width: min(100%, 1080px);
+  margin: 0 auto 20px;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(60, 45, 45, 0.08);
+}
+
+.alerta-home {
+  color: #8a5b16;
+}
+
+.cards-home {
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card-indicador {
+  min-height: 180px;
+  padding: 24px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(60, 45, 45, 0.08);
+  box-shadow: 0 14px 30px rgba(60, 45, 45, 0.06);
+}
+
+.card-indicador[data-tone='azul'] {
+  border-top: 6px solid #2d6cdf;
+}
+
+.card-indicador[data-tone='verde'] {
+  border-top: 6px solid #1f8b5f;
+}
+
+.card-indicador[data-tone='ambar'] {
+  border-top: 6px solid #d78a22;
+}
+
+.card-indicador[data-tone='grafite'] {
+  border-top: 6px solid #55546b;
+}
+
+.titulo-card {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(73, 59, 59, 0.68);
+}
+
+.valor-card {
+  display: block;
+  margin-bottom: 14px;
+  font-size: clamp(2rem, 2.5vw, 2.6rem);
+  line-height: 1;
+  color: #2d2626;
+}
+
+.descricao-card {
+  margin: 0;
+  line-height: 1.5;
+  color: rgba(40, 33, 33, 0.72);
+}
+
+@media (max-width: 1200px) {
+  .cards-home {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {
-  .conteudo-principal {
-    left: 210px;
-  }
-
   .logo-central {
     max-width: calc(100% - 40px);
+  }
+}
+
+@media (max-width: 720px) {
+  .conteudo-home {
+    padding-top: 112px;
+  }
+
+  .cards-home {
+    grid-template-columns: 1fr;
   }
 }

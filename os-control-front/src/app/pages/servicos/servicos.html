@@ -1,30 +1,42 @@
-﻿<section class="pagina-servicos">
-  <div class="modal-servicos">
+﻿<section class="pagina-formulario-modal pagina-servicos">
+  <div class="cartao-formulario-modal modal-servicos">
     <a
-      class="botao-fechar"
+      class="botao-fechar-formulario botao-fechar"
       routerLink="/servicos"
       aria-label="Fechar cadastro de servico"
     >
-      <img class="icone-fechar" src="assets/icone-fechar.png" alt="" />
+      <img class="icone-fechar-formulario icone-fechar" src="assets/icone-fechar.png" alt="" />
     </a>
 
-    <form class="formulario-servicos" (ngSubmit)="salvarServico()">
-      <h1 class="titulo-modal">{{ titulo }}</h1>
+    <form class="formulario-modal formulario-servicos" (ngSubmit)="salvarServico()">
+      <h1 class="titulo-formulario-modal titulo-modal">{{ titulo }}</h1>
 
-      <div class="grade-campos">
-        <label class="campo-formulario campo-nome" for="servico-nome">
-          <span class="rotulo-campo">Nome</span>
-          <input class="entrada-campo" id="servico-nome" type="text" [(ngModel)]="servico.nome" name="servicoNome" />
+      <div class="grade-formulario-modal grade-campos">
+        <label class="campo-formulario-modal campo-formulario campo-nome" for="servico-nome">
+          <span class="rotulo-formulario-modal rotulo-campo">Nome</span>
+          <input
+            class="entrada-formulario-modal entrada-campo"
+            id="servico-nome"
+            type="text"
+            [(ngModel)]="servico.nome"
+            name="servicoNome"
+          />
         </label>
 
-        <label class="campo-formulario campo-valor" for="servico-valor">
-          <span class="rotulo-campo">Valor</span>
-          <input class="entrada-campo" id="servico-valor" type="text" inputmode="decimal" [(ngModel)]="servico.valor" name="servicoValor" />
+        <label class="campo-formulario-modal campo-formulario campo-valor" for="servico-valor">
+          <span class="rotulo-formulario-modal rotulo-campo">Valor</span>
+          <input
+            class="entrada-formulario-modal entrada-campo"
+            id="servico-valor"
+            type="text"
+            inputmode="decimal"
+            [(ngModel)]="servico.valor"
+            name="servicoValor"
+          />
         </label>
       </div>
 
-      <button class="botao-cadastrar" type="submit">{{ textoBotao }}</button>
+      <button class="botao-formulario-modal botao-cadastrar" type="submit">{{ textoBotao }}</button>
     </form>
   </div>
 </section>
-

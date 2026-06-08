@@ -1,12 +1,3 @@
-export type DiaCalendario =
-  | {
-      data: Date;
-      domingo: boolean;
-      numero: number;
-      selecionado: boolean;
-    }
-  | null;
-
 export type AbaOrcamento = 'pecas' | 'servicos';
 
 export interface ServicoSelecionado {
@@ -36,10 +27,6 @@ export interface OrcamentoSalvo {
   pecas: PecaSelecionada[];
   valorTotal: string;
   total: number;
-  cliente: string;
-  nomeCliente: string;
-  veiculo: string;
-  modelo: string;
 }
 
 export interface OrcamentoLista {
@@ -51,8 +38,6 @@ export interface OrcamentoLista {
 export interface OrcamentoImportacao {
   id: string;
   nome: string;
-  cliente: string;
-  veiculo: string;
   dataAbertura: string;
   observacao: string;
   servicos: ServicoSelecionado[];

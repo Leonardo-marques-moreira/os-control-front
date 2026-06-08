@@ -1,21 +1,7 @@
-.pagina-clientes-lista {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
-.conteudo-clientes-lista {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  padding: 26px 0 44px;
-  background: #f2efef;
-  overflow: auto;
-}
+/* Ajustes especificos da lista de clientes. A estrutura geral fica em styles.css. */
 
 .barra-filtros {
-  grid-template-columns: minmax(0, 352px) 90px 44px 1fr;
+  grid-template-columns: minmax(0, 352px) 90px 46px 1fr;
   gap: 16px 18px;
 }
 
@@ -34,7 +20,10 @@
 
 .cabecalho-tabela,
 .linha-tabela {
-  grid-template-columns: 92px minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 0.95fr) 88px;
+  grid-template-columns: 92px minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(
+      0,
+      0.95fr
+    ) 88px;
   column-gap: 18px;
 }
 
@@ -43,23 +32,14 @@
 }
 
 @media (max-width: 1280px) {
-  .conteudo-clientes-lista {
-    padding-inline: 0;
-  }
-
   .barra-filtros {
-    grid-template-columns: minmax(0, 1fr) 90px 44px;
-  }
-
-  .botao-novo-cliente {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) 90px 46px 1fr;
   }
 }
 
 @media (max-width: 980px) {
   .conteudo-clientes-lista {
-    left: 210px;
-    padding: 26px 0 36px;
+    padding-bottom: 36px;
   }
 
   .titulo-pagina {
@@ -67,24 +47,22 @@
   }
 
   .barra-filtros {
-    grid-template-columns: minmax(0, 1fr) 82px 44px;
+    grid-template-columns: minmax(0, 1fr) 82px 46px 1fr;
     margin-inline: 12px;
   }
 
   .cabecalho-tabela,
   .linha-tabela {
-    grid-template-columns: 68px minmax(150px, 1.2fr) minmax(122px, 1fr) minmax(110px, 0.8fr) minmax(110px, 0.82fr) 88px;
+    grid-template-columns: 68px minmax(150px, 1.2fr) minmax(122px, 1fr) minmax(110px, 0.8fr) minmax(
+        110px,
+        0.82fr
+      ) 88px;
     padding-inline: 18px;
     font-size: 15px;
   }
 }
 
 @media (max-width: 720px) {
-  .conteudo-clientes-lista {
-    position: static;
-    padding-top: 128px;
-  }
-
   .cabecalho-pagina {
     min-height: auto;
   }

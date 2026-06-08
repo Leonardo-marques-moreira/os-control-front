@@ -1,21 +1,7 @@
-.pagina-servicos-lista {
-  min-height: 100dvh;
-  background: #f2efef;
-}
-
-.conteudo-servicos-lista {
-  position: fixed;
-  top: 93px;
-  left: 228px;
-  right: 0;
-  bottom: 0;
-  padding: 26px 0 44px;
-  background: #f2efef;
-  overflow: auto;
-}
+/* Ajustes especificos da lista de servicos. A estrutura geral fica em styles.css. */
 
 .barra-filtros {
-  grid-template-columns: 354px 44px 1fr;
+  grid-template-columns: 354px 46px 1fr;
 }
 
 .botao-novo-item {
@@ -31,7 +17,7 @@
 
 @media (max-width: 1280px) {
   .barra-filtros {
-    grid-template-columns: minmax(0, 1fr) 44px;
+    grid-template-columns: minmax(0, 1fr) 46px;
   }
 
   .botao-novo-item {
@@ -39,22 +25,7 @@
   }
 }
 
-@media (max-width: 980px) {
-  .conteudo-servicos-lista {
-    left: 210px;
-  }
-}
-
 @media (max-width: 720px) {
-  .conteudo-servicos-lista {
-    position: static;
-    padding-top: 128px;
-  }
-
-  .barra-filtros {
-    grid-template-columns: 1fr;
-  }
-
   .botao-novo-item {
     min-width: 0;
   }
