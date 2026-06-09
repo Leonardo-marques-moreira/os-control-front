@@ -11,6 +11,7 @@ import {
 } from '../../models/orcamento.model';
 import { PecaSalva } from '../../models/peca.model';
 import { ServicoSalvo } from '../../models/servico.model';
+import { MensagemService } from '../../services/mensagem.service';
 import { OrcamentosService } from '../../services/orcamentos.service';
 import { PecasService } from '../../services/pecas.service';
 import { ServicosService } from '../../services/servicos.service';
@@ -74,6 +75,7 @@ export class Orcamentos implements OnInit {
     private orcamentosService: OrcamentosService,
     private pecasService: PecasService,
     private servicosService: ServicosService,
+    private mensagemService: MensagemService,
   ) {
     this.sincronizarCalendario(this.dataSelecionada);
   }
@@ -100,6 +102,10 @@ export class Orcamentos implements OnInit {
 
   get mensagemConfirmacaoPdf() {
     return this.modoEdicao ? 'Orcamento salvo,' : 'Orcamento confirmado,';
+  }
+
+  get podeVisualizarPdf() {
+    return this.modoEdicao && !!this.orcamentoId;
   }
 
   get placeholder() {
@@ -353,16 +359,48 @@ export class Orcamentos implements OnInit {
     this.finalizarConfirmacaoOrcamento();
   }
 
+  visualizarPdf() {
+    if (!this.orcamentoId) {
+      this.mensagemService.informar(
+        'Salve o orcamento antes de visualizar o PDF.',
+        'PDF indisponivel',
+      );
+      return;
+    }
+
+    const janela = window.open('', '_blank');
+
+    if (!janela) {
+      this.mensagemService.informar(
+        'Nao foi possivel abrir uma nova aba para o PDF.',
+        'PDF indisponivel',
+      );
+      return;
+    }
+
+    this.orcamentosService.obterPdf(this.orcamentoId).subscribe({
+      next: (pdf) => {
+        const url = URL.createObjectURL(pdf);
+        janela.location.href = url;
+        window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      },
+      error: (erro) => {
+        console.error('Nao foi possivel abrir o PDF do orcamento.', erro);
+        janela.close();
+        this.mensagemService.informar(
+          'Nao foi possivel abrir o PDF do orcamento.',
+          'Erro ao abrir PDF',
+        );
+      },
+    });
+  }
+
   formatarMoeda(valor: number) {
     return formatarMoeda(valor);
   }
 
   private salvarOrcamento() {
     const nome = this.nomeOrcamento.trim();
-
-    if (!nome) {
-      return;
-    }
 
     const totalServicos = this.servicosSelecionados.reduce((soma, item) => soma + item.valor, 0);
     const totalPecas = this.pecasSelecionadas.reduce((soma, item) => soma + item.valorTotal, 0);

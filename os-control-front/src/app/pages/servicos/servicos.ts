@@ -66,6 +66,8 @@ export class Servicos implements OnInit {
       next: () => {
         if (novoCadastro) {
           this.mensagemService.mostrarSucesso('Servico cadastrado com sucesso.');
+        } else {
+          this.mensagemService.mostrarSucesso('Servico editado com sucesso.');
         }
 
         this.router.navigate(['/servicos']);

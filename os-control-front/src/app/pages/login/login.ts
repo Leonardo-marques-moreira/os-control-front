@@ -22,7 +22,15 @@ export class Login {
   ) {}
 
   entrar() {
-    this.authService.entrar(this.usuario, this.senha).subscribe({
+    const usuario = this.usuario.trim();
+    const senha = this.senha.trim();
+
+    if (!usuario || !senha) {
+      this.mensagemService.mostrarErro('Usuario e senha sao obrigatorios.');
+      return;
+    }
+
+    this.authService.entrar(usuario, senha).subscribe({
       next: autenticado => {
         if (!autenticado) {
           return;

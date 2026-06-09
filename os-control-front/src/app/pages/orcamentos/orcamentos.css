@@ -93,6 +93,43 @@
   margin-top: 2px;
 }
 
+.acoes-formulario-orcamento {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  justify-self: end;
+  width: 190px;
+}
+
+.acoes-formulario-orcamento .botao-confirmar {
+  width: 100%;
+}
+
+.botao-visualizar-pdf-orcamento {
+  min-height: 58px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 20px;
+  background: #c63c3c;
+  font-size: 20px;
+  line-height: 1.1;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+.botao-visualizar-pdf-orcamento:hover {
+  background: #b93232;
+}
+
+.botao-visualizar-pdf-orcamento:disabled {
+  background: #d7c0c0;
+  color: #6f6565;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 .botao-confirmar {
   width: 190px;
   min-height: 74px;
@@ -310,6 +347,10 @@
   }
 
   .botao-confirmar {
+    width: 100%;
+  }
+
+  .acoes-formulario-orcamento {
     width: 100%;
   }
 

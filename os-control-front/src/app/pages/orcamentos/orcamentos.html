@@ -175,9 +175,26 @@
           ></textarea>
         </label>
 
-        <button class="botao-confirmar" type="button" (click)="confirmar()">
-          {{ textoBotao }}
-        </button>
+        <div class="acoes-formulario-orcamento">
+          <button
+            *ngIf="modoEdicao"
+            class="botao-visualizar-pdf-orcamento"
+            type="button"
+            [disabled]="!podeVisualizarPdf"
+            [title]="
+              podeVisualizarPdf
+                ? 'Abrir PDF do orcamento'
+                : 'Salve o orcamento antes de visualizar o PDF'
+            "
+            (click)="visualizarPdf()"
+          >
+            Visualizar PDF
+          </button>
+
+          <button class="botao-confirmar" type="button" (click)="confirmar()">
+            {{ textoBotao }}
+          </button>
+        </div>
       </div>
     </form>
   </main>
