@@ -265,20 +265,6 @@
         </label>
 
         <div class="acoes-formulario-os">
-          <button
-            *ngIf="modoEdicao"
-            class="botao-visualizar-pdf-os"
-            type="button"
-            [disabled]="!podeVisualizarPdf"
-            [title]="
-              podeVisualizarPdf
-                ? 'Abrir PDF do orçamento vinculado'
-                : 'Esta OS nao possui orcamento vinculado'
-            "
-            (click)="visualizarPdf()"
-          >
-            Visualizar PDF
-          </button>
 
           <button class="botao-cadastrar-os" type="submit">{{ textoBotao }}</button>
         </div>

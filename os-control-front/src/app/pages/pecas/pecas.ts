@@ -50,7 +50,13 @@ export class Pecas implements OnInit {
     const nome = this.peca.nome.trim();
     const valor = converterMoedaParaNumero(this.peca.valor);
 
-    if (!nome || valor === null) {
+    if (!nome) {
+      this.mensagemService.mostrarErro('Nome da peça é obrigatória.');
+      return;
+    }
+
+    if (valor === null || valor <= 0) {
+      this.mensagemService.mostrarErro('Valor unitário da peça deve ser maior que zero.');
       return;
     }
 

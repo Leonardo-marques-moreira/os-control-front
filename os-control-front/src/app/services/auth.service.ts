@@ -61,16 +61,55 @@ export class AuthService {
   }
 
   ehAdmin(): boolean {
-    return this.obterPerfil() === this.PERFIL_ADMIN;
+    return this.estaAutenticado() && this.obterPerfil() === this.PERFIL_ADMIN;
   }
 
   estaAutenticado(): boolean {
-    return this.obterToken().trim().length > 0;
+    const token = this.obterToken().trim();
+
+    if (!token) {
+      return false;
+    }
+
+    const payload = this.obterPayloadToken(token);
+
+    if (!payload || typeof payload.exp !== 'number') {
+      this.sair();
+      return false;
+    }
+
+    if (Date.now() >= payload.exp * 1000) {
+      this.sair();
+      return false;
+    }
+
+    return true;
   }
 
   sair(): void {
     localStorage.removeItem(this.CHAVE_USUARIO);
     localStorage.removeItem(this.CHAVE_TOKEN);
     localStorage.removeItem(this.CHAVE_PERFIL);
+  }
+
+  private obterPayloadToken(token: string): { exp?: unknown } | null {
+    const partes = token.split('.');
+
+    if (partes.length !== 3) {
+      return null;
+    }
+
+    const payloadNormalizado = partes[1].replace(/-/g, '+').replace(/_/g, '/');
+    const payloadPadded = payloadNormalizado.padEnd(
+      Math.ceil(payloadNormalizado.length / 4) * 4,
+      '=',
+    );
+
+    try {
+      const payloadJson = atob(payloadPadded);
+      return JSON.parse(payloadJson) as { exp?: unknown };
+    } catch {
+      return null;
+    }
   }
 }

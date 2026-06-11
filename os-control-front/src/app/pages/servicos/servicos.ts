@@ -50,7 +50,13 @@ export class Servicos implements OnInit {
     const nome = this.servico.nome.trim();
     const valor = converterMoedaParaNumero(this.servico.valor);
 
-    if (!nome || valor === null) {
+    if (!nome) {
+      this.mensagemService.mostrarErro('Descrição do serviço é obrigatória.');
+      return;
+    }
+
+    if (valor === null || valor <= 0) {
+      this.mensagemService.mostrarErro('Valor do serviço deve ser maior que zero.');
       return;
     }
 

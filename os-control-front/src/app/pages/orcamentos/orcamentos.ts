@@ -361,20 +361,14 @@ export class Orcamentos implements OnInit {
 
   visualizarPdf() {
     if (!this.orcamentoId) {
-      this.mensagemService.informar(
-        'Salve o orcamento antes de visualizar o PDF.',
-        'PDF indisponivel',
-      );
+      this.mensagemService.mostrarErro('Salve o orcamento antes de visualizar o PDF.');
       return;
     }
 
     const janela = window.open('', '_blank');
 
     if (!janela) {
-      this.mensagemService.informar(
-        'Nao foi possivel abrir uma nova aba para o PDF.',
-        'PDF indisponivel',
-      );
+      this.mensagemService.mostrarErro('Nao foi possivel abrir uma nova aba para o PDF.');
       return;
     }
 
@@ -387,10 +381,7 @@ export class Orcamentos implements OnInit {
       error: (erro) => {
         console.error('Nao foi possivel abrir o PDF do orcamento.', erro);
         janela.close();
-        this.mensagemService.informar(
-          'Nao foi possivel abrir o PDF do orcamento.',
-          'Erro ao abrir PDF',
-        );
+        this.mensagemService.mostrarErro('Nao foi possivel abrir o PDF do orcamento.');
       },
     });
   }

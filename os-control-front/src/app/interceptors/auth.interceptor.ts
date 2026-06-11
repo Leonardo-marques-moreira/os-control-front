@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
 import { MensagemService } from '../services/mensagem.service';
 
@@ -14,11 +15,17 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
 };
 
 function adicionarTokenQuandoNecessario(request: HttpRequest<unknown>) {
-  if (ehRotaPublica(request) || request.headers.has('Authorization')) {
+  if (!ehRotaDoBackend(request) || ehRotaPublica(request) || request.headers.has('Authorization')) {
     return request;
   }
 
-  const token = inject(AuthService).obterToken();
+  const authService = inject(AuthService);
+
+  if (!authService.estaAutenticado()) {
+    return request;
+  }
+
+  const token = authService.obterToken();
 
   if (!token) {
     return request;
@@ -29,6 +36,13 @@ function adicionarTokenQuandoNecessario(request: HttpRequest<unknown>) {
       Authorization: `Bearer ${token}`,
     },
   });
+}
+
+function ehRotaDoBackend(request: HttpRequest<unknown>) {
+  const apiBaseUrl = normalizarUrl(environment.apiBaseUrl);
+  const urlRequisicao = normalizarUrl(request.url);
+
+  return urlRequisicao === apiBaseUrl || urlRequisicao.startsWith(`${apiBaseUrl}/`);
 }
 
 function ehRotaPublica(request: HttpRequest<unknown>) {
@@ -80,4 +94,8 @@ function extrairDadosErro(valor: unknown) {
 
 function extrairTexto(valor: unknown) {
   return typeof valor === 'string' ? valor.trim() : '';
+}
+
+function normalizarUrl(url: string) {
+  return url.trim().replace(/\/+$/, '');
 }

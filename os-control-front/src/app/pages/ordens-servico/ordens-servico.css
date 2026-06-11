@@ -122,26 +122,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
 }
 
-.botao-visualizar-pdf-os {
-  min-height: 58px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 20px;
-  background: #c63c3c;
-  font-size: 20px;
-  line-height: 1.1;
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
-}
-
-.botao-visualizar-pdf-os:disabled {
-  background: #d7c0c0;
-  color: #6f6565;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
 .rodape-modal-peca {
   display: grid;
   grid-template-columns: 78px minmax(240px, 1.1fr) 86px 148px 148px minmax(326px, auto);
@@ -219,7 +199,6 @@
     width: 100%;
   }
 
-  .botao-visualizar-pdf-os,
   .botao-cadastrar-os {
     width: 100%;
     max-width: 260px;
@@ -258,7 +237,6 @@
     max-width: 100%;
   }
 
-  .botao-visualizar-pdf-os,
   .botao-cadastrar-os {
     max-width: 100%;
     justify-self: stretch;

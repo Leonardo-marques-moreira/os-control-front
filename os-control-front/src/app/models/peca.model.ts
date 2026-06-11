@@ -17,7 +17,7 @@ export interface PecaSalva {  // define a estrutura dos dados de uma peça salva
 }
 
 export interface PecaLista { //   define a estrutura dos dados de uma peça para exibição na lista, contendo apenas os campos necessários para mostrar as informações da peça na tabela, formatando o valor como moeda
-  id: string;
+  id: string; 
   nome: string;
   valor: string;
 }

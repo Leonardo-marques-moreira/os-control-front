@@ -10,7 +10,6 @@ import { ServicoSalvo } from '../../models/servico.model';
 import { PecaSelecionada, ServicoSelecionado } from '../../models/orcamento.model';
 import { ClientesService } from '../../services/clientes.service';
 import { OrdensServicoService } from '../../services/ordens-servico.service';
-import { OrcamentosService } from '../../services/orcamentos.service';
 import { PecasService } from '../../services/pecas.service';
 import { ServicosService } from '../../services/servicos.service';
 import { TecnicosService } from '../../services/tecnicos.service';
@@ -85,7 +84,7 @@ export class OrdensServico implements OnInit {
     private route: ActivatedRoute,
     private clientesService: ClientesService,
     private ordensServicoService: OrdensServicoService,
-    private orcamentosService: OrcamentosService,
+
     private pecasService: PecasService,
     private servicosService: ServicosService,
     private tecnicosService: TecnicosService,
@@ -119,10 +118,6 @@ export class OrdensServico implements OnInit {
 
   get textoBotao() {
     return this.modoEdicao ? 'Salvar OS' : 'Cadastrar OS';
-  }
-
-  get podeVisualizarPdf() {
-    return this.obterOrcamentoIdParaPdf() !== null;
   }
 
   get placeholder() {
@@ -381,31 +376,6 @@ export class OrdensServico implements OnInit {
     });
   }
 
-  visualizarPdf() {
-    const orcamentoId = this.obterOrcamentoIdParaPdf();
-
-    if (orcamentoId === null) {
-      return;
-    }
-
-    const janela = window.open('', '_blank');
-
-    if (!janela) {
-      return;
-    }
-
-    this.orcamentosService.obterPdf(String(orcamentoId)).subscribe({
-      next: (pdf) => {
-        const url = URL.createObjectURL(pdf);
-        janela.location.href = url;
-        window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
-      },
-      error: (erro) => {
-        console.error('Nao foi possivel abrir o PDF do orcamento vinculado.', erro);
-        janela.close();
-      },
-    });
-  }
 
   private carregarCatalogos() {
     this.clientesService.listar().subscribe({
