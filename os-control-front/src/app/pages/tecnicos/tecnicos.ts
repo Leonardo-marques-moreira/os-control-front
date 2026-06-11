@@ -49,15 +49,16 @@ export class Tecnicos implements OnInit {
   }
 
   salvarTecnico() {
-    const nome = this.tecnico.nome.trim();
+    const mensagemErro = this.validarFormulario();
 
-    if (!nome) {
+    if (mensagemErro) {
+      this.mensagemService.mostrarErro(mensagemErro);
       return;
     }
 
     const tecnicoSalvo: TecnicoSalvo = {
       id: this.tecnicoId,
-      nome,
+      nome: this.tecnico.nome.trim(),
       cpf: this.tecnico.cpf.trim(),
       telefone: this.tecnico.telefone.trim(),
       usuario: this.tecnico.usuario.trim(),
@@ -77,6 +78,30 @@ export class Tecnicos implements OnInit {
         console.error('Nao foi possivel salvar o tecnico.', erro);
       },
     });
+  }
+
+  private validarFormulario() {
+    if (!this.tecnico.nome.trim()) {
+      return 'Nome é obrigatório.';
+    }
+
+    if (!this.tecnico.cpf.trim()) {
+      return 'CPF é obrigatório.';
+    }
+
+    if (!this.tecnico.telefone.trim()) {
+      return 'Telefone é obrigatório.';
+    }
+
+    if (!this.tecnico.usuario.trim()) {
+      return 'Login é obrigatório.';
+    }
+
+    if (!this.modoEdicao && !this.tecnico.senha.trim()) {
+      return 'Senha é obrigatória.';
+    }
+
+    return '';
   }
 
   atualizarCpf(valor: string) {
